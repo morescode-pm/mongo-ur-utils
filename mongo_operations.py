@@ -10,7 +10,7 @@ from pymongo.database import Database
 load_dotenv()
 
 # MongoDB connection configuration
-MONGO_URI = os.getenv("MONGO_URI"")
+MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = os.getenv("MONGO_DB")
 COLLECTION_NAME = os.getenv("MONGO_COLLECTION")
 
