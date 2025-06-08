@@ -47,15 +47,15 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
             try:
                 if operation == "create":
                     # Insert new document if it doesn't exist
-                    if not collection.find_one({"mediaId": media_id}):
-                        collection.insert_one({"mediaId": media_id, **data})
+                    if not collection.find_one({"mediaID": media_id}):
+                        collection.insert_one({"mediaID": media_id, **data})
                     else:
                         print(f"Skipping existing document: {media_id}")
 
                 elif operation == "update":
                     # Update existing document, adding new AI model results
                     collection.update_one(
-                        {"mediaId": media_id},
+                        {"mediaID": media_id},
                         {"$push": {"aiModel": {"$each": data["aiModel"]}}},
                         upsert=True,
                     )
