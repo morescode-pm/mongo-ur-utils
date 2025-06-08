@@ -23,7 +23,7 @@ def get_mongo_connection() -> Tuple[MongoClient, Database, Collection]:
 
 def update_mongo_records(json_file: str, operation: str = "update") -> None:
     """
-    Update MongoDB records with AI model results
+    Update MongoDB records with AI results
 
     Args:
         json_file (str): Path to the JSON file with detection results
@@ -46,18 +46,18 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
         for media_id, data in results.items():
             try:
                 if operation == "update":
-                    # Update existing document, adding new AI model results
+                    # Update existing document, adding new AI results
                     collection.update_one(
                         {"mediaID": media_id},
-                        {"$push": {"aiModel": {"$each": data["aiModel"]}}},
+                        {"$push": {"aiResults": {"$each": data["aiResults"]}}},
                         upsert=True,
                     )
 
                 elif operation == "replace":
-                    # Replace existing AI model results with new ones
+                    # Replace existing AI results with new ones
                     collection.update_one(
                         {"mediaId": media_id},
-                        {"$set": {"aiModel": data["aiModel"]}},
+                        {"$set": {"aiResults": data["aiResults"]}},
                         upsert=True,
                     )
 
@@ -88,8 +88,8 @@ def main():
 
     # Ask for operation type
     print("\nAvailable operations:")
-    print("1. update - Add new AI model results to existing documents")
-    print("2. replace - Replace existing AI model results")
+    print("1. update - Add new AI results to existing documents")
+    print("2. replace - Replace existing AI results")
     
     operation = input("\nSelect operation type (update/replace): ").lower()
     if operation not in ["update", "replace"]:
