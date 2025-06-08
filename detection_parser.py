@@ -54,23 +54,19 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None, run_date
             if det["label"] == "animal":
                 animal_confs.append(float(det["conf"]))
             elif det["label"] == "human":
-                human_confs.append(float(det["conf"]))
-
-        # Process animal detections
+                human_confs.append(float(det["conf"]))        # Process animal detections
         if animal_confs:
             avg_animal_conf = sum(animal_confs) / len(animal_confs)
-            conf_animal = avg_animal_conf
-            conf_blank = 1 - avg_animal_conf
+            conf_animal = round(avg_animal_conf, 2)
+            conf_blank = round(1 - avg_animal_conf, 2)
 
         # Process human detections
         if human_confs:
             avg_human_conf = sum(human_confs) / len(human_confs)
-            conf_human = avg_human_conf
-            conf_blank = 1 - avg_human_conf
-
-        # If no detections, set blank confidence to 1
+            conf_human = round(avg_human_conf, 2)
+            conf_blank = round(1 - avg_human_conf, 2)        # If no detections, set blank confidence to 1
         if not animal_confs and not human_confs:
-            conf_blank = 1.0
+            conf_blank = round(1.0, 2)
 
         # Create MongoDB document with camelCase keys
         ai_model_result = {
@@ -82,6 +78,7 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None, run_date
         }
 
         results[media_id] = {
+            "mediaID": media_id,
             "aiModel": [ai_model_result]
         }
 
@@ -120,7 +117,7 @@ def main():
         # Print sample outputs
         print("\nSample outputs:")
         for media_id, result in results.items():
-            print(f"\nMediaID: {media_id}")
+            print(f"\nmediaID: {media_id}")
             print(json.dumps(result, indent=2))
 
         # Prompt to process all records
