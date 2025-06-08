@@ -10,9 +10,9 @@ from pymongo.database import Database
 load_dotenv()
 
 # MongoDB connection configuration
-MONGO_URI = os.getenv("MONGO_URI")
-DB_NAME = os.getenv("MONGO_DB")
-COLLECTION_NAME = os.getenv("MONGO_COLLECTION")
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+DB_NAME = os.getenv("MONGO_DB", "urbanrivers")
+COLLECTION_NAME = os.getenv("MONGO_COLLECTION", "medias")
 
 def get_mongo_connection() -> Tuple[MongoClient, Database, Collection]:
     """Get MongoDB connection, database and collection"""
