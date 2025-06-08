@@ -78,7 +78,6 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None, run_date
         }
 
         results[media_id] = {
-            "mediaID": media_id,
             "aiModel": [ai_model_result]
         }
 

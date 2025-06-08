@@ -1,0 +1,20 @@
+{
+  "predictions": [
+    {
+      "filepath": "/images/test001.jpg",
+      "detections": [
+        { "label": "animal", "conf": "0.9" }
+      ]
+    },
+    {
+      "filepath": "/images/test002.jpg",
+      "detections": [
+        { "label": "human", "conf": "0.8" }
+      ]
+    },
+    {
+      "filepath": "/images/test003.jpg",
+      "detections": []
+    }
+  ]
+}

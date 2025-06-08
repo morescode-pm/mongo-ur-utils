@@ -27,7 +27,7 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
 
     Args:
         json_file (str): Path to the JSON file with detection results
-        operation (str): One of 'create', 'update', or 'replace'
+        operation (str): One of 'update', or 'replace'
     """
     # Get MongoDB connection
     client, db, collection = get_mongo_connection()
@@ -45,14 +45,7 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
         # Process each record
         for media_id, data in results.items():
             try:
-                if operation == "create":
-                    # Insert new document if it doesn't exist
-                    if not collection.find_one({"mediaID": media_id}):
-                        collection.insert_one({"mediaID": media_id, **data})
-                    else:
-                        print(f"Skipping existing document: {media_id}")
-
-                elif operation == "update":
+                if operation == "update":
                     # Update existing document, adding new AI model results
                     collection.update_one(
                         {"mediaID": media_id},
@@ -95,13 +88,12 @@ def main():
 
     # Ask for operation type
     print("\nAvailable operations:")
-    print("1. create - Insert new documents only")
-    print("2. update - Add new AI model results to existing documents")
-    print("3. replace - Replace existing AI model results")
+    print("1. update - Add new AI model results to existing documents")
+    print("2. replace - Replace existing AI model results")
     
-    operation = input("\nSelect operation type (create/update/replace): ").lower()
-    if operation not in ["create", "update", "replace"]:
-        print("Invalid operation type. Please choose 'create', 'update', or 'replace'.")
+    operation = input("\nSelect operation type (update/replace): ").lower()
+    if operation not in ["update", "replace"]:
+        print("Invalid operation type. Please choose 'update', or 'replace'.")
         return
 
     # Process the records
