@@ -54,17 +54,21 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None, run_date
             if det["label"] == "animal":
                 animal_confs.append(float(det["conf"]))
             elif det["label"] == "human":
-                human_confs.append(float(det["conf"]))        # Process animal detections
+                human_confs.append(float(det["conf"]))        
+        
+        # Process animal detections
         if animal_confs:
-            avg_animal_conf = sum(animal_confs) / len(animal_confs)
-            conf_animal = round(avg_animal_conf, 2)
-            conf_blank = round(1 - avg_animal_conf, 2)
+            max_animal_conf = max(animal_confs)
+            conf_animal = round(max_animal_conf, 2)
+            conf_blank = round(1 - max_animal_conf, 2)
 
         # Process human detections
         if human_confs:
-            avg_human_conf = sum(human_confs) / len(human_confs)
-            conf_human = round(avg_human_conf, 2)
-            conf_blank = round(1 - avg_human_conf, 2)        # If no detections, set blank confidence to 1
+            max_human_conf = max(human_confs)
+            conf_human = round(max_human_conf, 2)
+            conf_blank = round(1 - max_human_conf, 2) # Overwrites conf_blank if there is a human
+        
+        # If no detections, set blank confidence to 1
         if not animal_confs and not human_confs:
             conf_blank = round(1.0, 2)
 
