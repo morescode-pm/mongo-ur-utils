@@ -48,17 +48,16 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
         item_count = 0
 
         # Process each record
+        print(f'Starting {operation} Operation\n')
         for media_id, data in results.items():
             item_count +=1
             if operation == "update":
-                print('Starting UPDATE Operation')
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$push": {"aiResults": {"$each": data["aiResults"]}}},
                     upsert=True,
                 )
             elif operation == "replace":
-                print('Starting REPLACE operation')
                 # Standardizing to mediaID as discussed in the problem description
                 op = UpdateOne(
                     {"mediaID": media_id},
@@ -87,17 +86,7 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
                     print(f"Bulk write error: {bwe.details}")
                     # Increment errors by the number of write errors
                     errors += len(bwe.details.get('writeErrors', []))
-                    # If you need to count how many operations succeeded despite the error,
-                    # you might need to inspect bwe.details further, e.g. result.nModified, result.nUpserted
                     # For simplicity, we're counting successful batches' effects on `processed`
-                    # and failed ones are captured in `errors`.
-                    # If an entire batch fails, `processed` won't be updated for that batch here.
-                    # Depending on desired atomicity, this might need adjustment.
-                    # The current `processed` count relies on `bulk_result` which is only available on success.
-                    # A more accurate processed count in case of BulkWriteError would be:
-                    # processed += bulk_result.matched_count + bulk_result.upserted_count before error
-                    # And then for the error case:
-                    # successful_in_error = bwe.details['nModified'] + bwe.details['nUpserted'] # etc.
                     # For now, we assume a batch either largely succeeds or its errors are counted.
                 except Exception as e:
                     print(f"Error during bulk write: {str(e)}")
