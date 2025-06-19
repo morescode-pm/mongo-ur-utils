@@ -33,7 +33,7 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
     # Get MongoDB connection
     client, db, collection = get_mongo_connection()
 
-    BATCH_SIZE = 1000
+    BATCH_SIZE = 10000
     operations = []
     processed = 0
     errors = 0
@@ -51,12 +51,14 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
         for media_id, data in results.items():
             item_count +=1
             if operation == "update":
+                print('Starting UPDATE Operation')
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$push": {"aiResults": {"$each": data["aiResults"]}}},
                     upsert=True,
                 )
             elif operation == "replace":
+                print('Starting REPLACE operation')
                 # Standardizing to mediaID as discussed in the problem description
                 op = UpdateOne(
                     {"mediaID": media_id},
