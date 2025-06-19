@@ -2,9 +2,10 @@ import json
 import os
 from typing import Tuple
 from dotenv import load_dotenv
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 from pymongo.collection import Collection
 from pymongo.database import Database
+from pymongo.errors import BulkWriteError
 
 # Load environment variables
 load_dotenv()
@@ -23,7 +24,7 @@ def get_mongo_connection() -> Tuple[MongoClient, Database, Collection]:
 
 def update_mongo_records(json_file: str, operation: str = "update") -> None:
     """
-    Update MongoDB records with AI results
+    Update MongoDB records with AI results using bulk operations.
 
     Args:
         json_file (str): Path to the JSON file with detection results
@@ -32,50 +33,84 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
     # Get MongoDB connection
     client, db, collection = get_mongo_connection()
 
+    BATCH_SIZE = 10000
+    operations = []
+    processed = 0
+    errors = 0
+    total = 0
+
     try:
         # Load the JSON file
         with open(json_file, "r") as f:
             results = json.load(f)
 
-        # Track statistics
         total = len(results)
-        processed = 0
-        errors = 0
+        item_count = 0
 
         # Process each record
+        print(f'Starting {operation} Operation\n')
         for media_id, data in results.items():
-            try:
-                if operation == "update":
-                    # Update existing document, adding new AI results
-                    collection.update_one(
-                        {"mediaID": media_id},
-                        {"$push": {"aiResults": {"$each": data["aiResults"]}}},
-                        upsert=True,
-                    )
-
-                elif operation == "replace":
-                    # Replace existing AI results with new ones
-                    collection.update_one(
-                        {"mediaId": media_id},
-                        {"$set": {"aiResults": data["aiResults"]}},
-                        upsert=True,
-                    )
-
-                processed += 1
-                if processed % 1000 == 0:
-                    print(f"Processed {processed}/{total} records")
-
-            except Exception as e:
-                print(f"Error processing {media_id}: {str(e)}")
+            item_count +=1
+            if operation == "update":
+                op = UpdateOne(
+                    {"mediaID": media_id},
+                    {"$push": {"aiResults": {"$each": data["aiResults"]}}},
+                    upsert=True,
+                )
+            elif operation == "replace":
+                # Standardizing to mediaID as discussed in the problem description
+                op = UpdateOne(
+                    {"mediaID": media_id},
+                    {"$set": {"aiResults": data["aiResults"]}},
+                    upsert=True,
+                )
+            else:
+                # Should not happen if input is validated, but good practice
+                print(f"Unknown operation: {operation} for mediaID: {media_id}")
                 errors += 1
+                continue
 
+            operations.append(op)
+
+            if len(operations) == BATCH_SIZE or item_count == total:
+                try:
+                    if operations: # ensure operations list is not empty
+                        bulk_result = collection.bulk_write(operations)
+                        # Count processed based on matched, modified and upserted
+                        # For $push, matched_count is more relevant if items are not always new
+                        # For $set, modified_count or upserted_count are relevant
+                        processed += bulk_result.matched_count + bulk_result.upserted_count
+                        print(f"Processed batch of {len(operations)}. Total processed: {processed}/{total}")
+                        operations = []  # Reset for the next batch
+                except BulkWriteError as bwe:
+                    print(f"Bulk write error: {bwe.details}")
+                    # Increment errors by the number of write errors
+                    errors += len(bwe.details.get('writeErrors', []))
+                    # For simplicity, we're counting successful batches' effects on `processed`
+                    # For now, we assume a batch either largely succeeds or its errors are counted.
+                except Exception as e:
+                    print(f"Error during bulk write: {str(e)}")
+                    errors += len(operations) # Assuming all operations in the batch failed
+                    operations = [] # Reset for the next batch
+
+        # Final print to show completion, even if total is 0 or last batch was smaller
         print(f"\nOperation complete:")
-        print(f"Total records: {total}")
-        print(f"Successfully processed: {processed}")
+        print(f"Total records to process: {total}")
+        print(f"Successfully processed (based on matched/upserted): {processed}")
         print(f"Errors: {errors}")
 
+    except FileNotFoundError:
+        print(f"Error: JSON file {json_file} not found.")
+        # No client.close() here as it's handled in finally
+    except json.JSONDecodeError:
+        print(f"Error: Could not decode JSON from {json_file}.")
+        # No client.close() here
+    except Exception as e:
+        print(f"An unexpected error occurred: {str(e)}")
+        # errors += total - processed # Or some other logic for unhandled exceptions
     finally:
-        client.close()
+        if 'client' in locals() and client: #Ensure client exists before closing
+            client.close()
 
 def main():
     """Main function to demonstrate usage"""
