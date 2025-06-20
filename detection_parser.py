@@ -52,12 +52,15 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None) -> Dict[
         if animal_confs:
             max_animal_conf = max(animal_confs)
             conf_animal = round(max_animal_conf, 2)
-            conf_blank = round(1 - max_animal_conf, 2)
+            # conf_blank = round(1 - max_animal_conf, 2)
 
         if human_confs:
             max_human_conf = max(human_confs)
             conf_human = round(max_human_conf, 2)
-            conf_blank = round(1 - max_human_conf, 2)
+            # conf_blank = round(1 - max_human_conf, 2)
+
+        # Assign conf_blank if both human and animal confs exist
+        conf_blank = max(0.0, round(1 - max(conf_human, conf_animal), 2))
 
         if not animal_confs and not human_confs:
             conf_blank = 1.0
