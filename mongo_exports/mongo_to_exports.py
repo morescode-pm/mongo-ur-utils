@@ -1,37 +1,31 @@
 """
-Downloads schema and documents (samples or full) from specified MongoDB collections.
+Downloads documents (samples or full) from specified MongoDB collections.
 
 Usage:
-    python download-mongo-schema.py [--download-type <type>]
+    python mongo_to_exports.py [--download-type <type>]
 
 Arguments:
     --download-type: Optional. Specifies the type of download.
                      Choices: "sample", "full". Default: "sample".
-                     - "sample": Downloads a schema and one representative sample document
+                     - "sample": Downloads one representative sample document
                                  for each identified type within each target collection.
                                  The sample is chosen as the largest document of its type,
                                  based on a scan of up to 'sample_scan_limit' documents.
-                     - "full": Downloads a schema (inferred from a sample of documents)
-                               and all documents from each target collection.
+                     - "full": Downloads all documents from each target collection.
 
 Environment Variables:
     MONGO_URI_DEV: MongoDB connection URI. Defaults to "mongodb://localhost:27017".
     MONGO_DB: MongoDB database name. Defaults to "urbanrivers".
 
 Output:
-    - JSON files for schemas (e.g., schema_collectionname.json) in OUTPUT_DIR.
     - JSON files for documents:
         - If "sample": samples_collectionname.json (dictionary of samples by type)
         - If "full": all_docs_collectionname.json (list of all documents)
-    - A zip file (mongo_exports.zip) containing all exported files.
 """
 import os
 import json
-import shutil
 import argparse
 from pymongo import MongoClient
-from collections import defaultdict
-from zipfile import ZipFile
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -41,16 +35,11 @@ load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI_DEV", "mongodb://localhost:27017")
 DB_NAME = os.getenv("MONGO_DB", "urbanrivers")
 
-OUTPUT_DIR = "mongo_exports"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
 # --- Configuration ---
 # Define which collections to process
 TARGET_COLLECTIONS = ["cameratrapmedias", "deploymentlocations", "observations"]
 # Max documents to scan when in "sample" mode to find representative docs by type
 SAMPLE_MODE_SCAN_LIMIT = 1000
-# Max documents to scan for inferring schema (for both "sample" and "full" modes)
-SCHEMA_INFERENCE_SAMPLE_SIZE = 200
 
 def setup_arg_parser():
     """Sets up the argument parser for command-line options."""
@@ -66,41 +55,6 @@ def setup_arg_parser():
         help="Specify 'sample' to download one sample of each collection type, or 'full' to download all documents. Defaults to 'sample'."
     )
     return parser
-
-def merge_types(existing, new):
-    if isinstance(existing, set):
-        existing.add(new)
-        return existing
-    return {existing, new}
-
-def infer_schema(doc, schema=None):
-    if schema is None:
-        schema = {}
-    for key, value in doc.items():
-        if isinstance(value, dict):
-            schema.setdefault(key, {})
-            infer_schema(value, schema[key])
-        elif isinstance(value, list):
-            schema.setdefault(key, {"type": "list", "items": {}})
-            for item in value:
-                if isinstance(item, dict):
-                    infer_schema(item, schema[key]["items"])
-                else:
-                    item_type = type(item).__name__
-                    existing_type = schema[key].get("item_type")
-                    schema[key]["item_type"] = merge_types(existing_type, item_type) if existing_type else item_type
-        else:
-            value_type = type(value).__name__
-            existing_type = schema.get(key)
-            schema[key] = merge_types(existing_type, value_type) if existing_type else value_type
-    return schema
-
-def get_schema_recursive(collection): # Uses global SCHEMA_INFERENCE_SAMPLE_SIZE
-    schema = {}
-    # Limit the number of documents scanned for schema inference to avoid performance issues
-    for doc in collection.find().limit(SCHEMA_INFERENCE_SAMPLE_SIZE):
-        schema = infer_schema(doc, schema)
-    return schema
 
 def get_sample_docs_by_type(collection, download_type="sample", type_field="type"):
     """
@@ -134,8 +88,6 @@ def export_collection(db, collection_name, download_type):
     print(f"Processing: {collection_name} (mode: {download_type})")
     collection = db[collection_name]
 
-    schema = get_schema_recursive(collection) # Schema generation remains sample-based
-
     print(f"Fetching documents for {collection_name} with download type: {download_type}...")
     if download_type == "full":
         # For "full" mode, the output is a list of all documents
@@ -154,23 +106,10 @@ def export_collection(db, collection_name, download_type):
         print(f"Error: Invalid download_type '{download_type}' in export_collection.")
         return
 
-    with open(os.path.join(OUTPUT_DIR, f"schema_{collection_name}.json"), "w") as f:
-        json.dump(convert_sets_to_lists(schema), f, indent=2)
-
-    with open(os.path.join(OUTPUT_DIR, sample_filename), "w") as f:
+    with open(sample_filename, "w") as f:
         json.dump(output_data, f, indent=2, default=str) # Ensure default=str for any other non-serializable types
 
-    print(f"Successfully exported schema and documents for {collection_name} to {OUTPUT_DIR}")
-
-def convert_sets_to_lists(obj):
-    if isinstance(obj, dict):
-        return {k: convert_sets_to_lists(v) for k, v in obj.items()}
-    elif isinstance(obj, set):
-        return list(obj)
-    elif isinstance(obj, list):
-        return [convert_sets_to_lists(i) for i in obj]
-    else:
-        return obj
+    print(f"Successfully exported documents for {collection_name}")
 
 # --- Mongo connection ---
 client = MongoClient(MONGO_URI)
