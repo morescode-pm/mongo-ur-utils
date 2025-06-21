@@ -43,3 +43,6 @@ cv_results/*.json
 
 # Logs
 *.log
+/mongo_exports/*.json
+/mongo_exports/*.zip
+
