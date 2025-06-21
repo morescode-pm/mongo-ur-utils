@@ -149,7 +149,6 @@ def generate_event_ids(input_file_path, time_threshold_seconds):
     except Exception as e:
         print(f"Error saving output file: {e}")
 
-    # Summary logic has been removed.
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
