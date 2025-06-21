@@ -1,0 +1,2 @@
+deploymentID,locationID,locationName,latitude,longitude,coordinateUncertainty,deploymentStart,deploymentEnd,setupBy,cameraID,cameraModel,cameraDelay,cameraHeight,cameraDepth,cameraTilt,cameraHeading,detectionDistance,timestampIssues,baitUse,featureType,habitat,deploymentGroups,deploymentTags,deploymentComments
+67df0bc915f68f96bb6f7ebe,67df0bc915f68f96bb6f7ebe,Wildmile-WMDIS_A,41.90668,-87.65232,,,,65da43e98966266b5eb496c3,,,,,,,,,,,,,,AFW,WildMile Disconnected floating island on west-bank of river (east coast of Goose Island)
