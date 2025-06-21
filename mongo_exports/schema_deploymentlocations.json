@@ -5,6 +5,21 @@
   "locationName": [
     "str"
   ],
+  "location": {
+    "type": [
+      "str"
+    ],
+    "coordinates": {
+      "type": "list",
+      "items": {},
+      "item_type": [
+        "float"
+      ]
+    },
+    "_id": [
+      "ObjectId"
+    ]
+  },
   "tags": {
     "type": "list",
     "items": {},
@@ -36,25 +51,10 @@
   "__v": [
     "int"
   ],
-  "zone": [
+  "projectArea": [
     "str"
   ],
-  "location": {
-    "type": [
-      "str"
-    ],
-    "coordinates": {
-      "type": "list",
-      "items": {},
-      "item_type": [
-        "float"
-      ]
-    },
-    "_id": [
-      "ObjectId"
-    ]
-  },
-  "projectArea": [
+  "zone": [
     "str"
   ]
 }
