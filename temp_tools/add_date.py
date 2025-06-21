@@ -1,3 +1,13 @@
+"""
+Adds rundate to all fields in json file if json file is a speciesnet predictions output.
+
+Usage:
+    python add_date.py
+
+Output:
+    - JSON file specified in json_file_path will have hardcoded rundate added
+"""
+
 import json
 from pathlib import Path
 
