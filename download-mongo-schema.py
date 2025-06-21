@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # MongoDB connection configuration
-MONGO_URI = os.getenv("MONGO_URI_PROD", "mongodb://localhost:27017")
+MONGO_URI = os.getenv("MONGO_URI_DEV", "mongodb://localhost:27017")
 DB_NAME = os.getenv("MONGO_DB", "urbanrivers")
 # COLLECTION_NAME = os.getenv("MONGO_COLLECTION", "medias")
 
