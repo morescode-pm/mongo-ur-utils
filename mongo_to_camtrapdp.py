@@ -213,9 +213,9 @@ def convert_observations_to_camtrapdp(mongo_observations_list, dp_headers, media
 
 def main():
     # Define input file paths
-    deployments_in_file = "mongo_exports/samples_deploymentlocations.json"
-    media_in_file = "mongo_exports/samples_cameratrapmedias.json"
-    observations_in_file = "mongo_exports/samples_observations.json"
+    deployments_in_file = "mongo_exports/all_docs_deploymentlocations.json"
+    media_in_file = "mongo_exports/all_docs_cameratrapmedias.json"
+    observations_in_file = "mongo_exports/all_docs_observations.json"
 
     # Define output directory and file paths
     output_dir = "output"
