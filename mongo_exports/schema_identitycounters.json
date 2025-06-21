@@ -1,6 +1,0 @@
-{
-  "_id": "ObjectId",
-  "field": "str",
-  "modelName": "str",
-  "count": "Int64"
-}
