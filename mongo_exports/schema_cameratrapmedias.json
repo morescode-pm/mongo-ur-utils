@@ -95,6 +95,35 @@
       ],
       "createdAt": [
         "datetime"
+      ],
+      "updatedAt": [
+        "datetime"
+      ]
+    }
+  },
+  "deploymentId": [
+    "ObjectId"
+  ],
+  "updatedAt": [
+    "datetime"
+  ],
+  "aiResults": {
+    "type": "list",
+    "items": {
+      "modelName": [
+        "str"
+      ],
+      "runDate": [
+        "str"
+      ],
+      "confBlank": [
+        "float"
+      ],
+      "confHuman": [
+        "float"
+      ],
+      "confAnimal": [
+        "float"
       ]
     }
   },
@@ -107,37 +136,20 @@
   "consensusStatus": [
     "str"
   ],
-  "favorite": [
-    "bool"
-  ],
   "favoriteCount": [
     "int"
   ],
   "favorites": {
     "type": "list",
-    "items": {},
-    "item_type": [
-      "ObjectId"
-    ]
+    "items": {}
   },
-  "flagged": [
-    "bool"
-  ],
   "lastObservation": [
     "datetime"
   ],
   "mediaComments": {
     "type": "list",
-    "items": {
-      "text": "str",
-      "author": "ObjectId",
-      "timestamp": "datetime",
-      "_id": "ObjectId"
-    }
+    "items": {}
   },
-  "needsReview": [
-    "bool"
-  ],
   "observations": {
     "type": "list",
     "items": {},
@@ -145,9 +157,6 @@
       "ObjectId"
     ]
   },
-  "removed": [
-    "bool"
-  ],
   "reviewCount": [
     "int"
   ],
@@ -186,29 +195,6 @@
       ],
       "_id": [
         "ObjectId"
-      ]
-    }
-  },
-  "updatedAt": [
-    "datetime"
-  ],
-  "aiResults": {
-    "type": "list",
-    "items": {
-      "modelName": [
-        "str"
-      ],
-      "runDate": [
-        "str"
-      ],
-      "confBlank": [
-        "float"
-      ],
-      "confHuman": [
-        "float"
-      ],
-      "confAnimal": [
-        "float"
       ]
     }
   }

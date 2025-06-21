@@ -1,27 +1,27 @@
 {
   "unknown": {
-    "_id": "67df0bc915f68f96bb6f7ebe",
-    "locationName": "Wildmile-WMDIS_A",
-    "zone": "WMDIS",
+    "_id": "67255d56aae4d901ce8df0d1",
+    "locationName": "EastSideGooseIsland-giog-2",
     "location": {
       "type": "Point",
       "coordinates": [
-        -87.65232,
-        41.90668
+        -87.65684107188882,
+        41.90248639858393
       ],
-      "_id": "67df0c9c1c7716da6bab6847"
+      "_id": "6726cf66642311c3d1923eea"
     },
     "tags": [
-      "AFW"
+      "beavercam"
     ],
     "mount": "",
     "favorite": false,
-    "notes": "WildMile Disconnected floating island on west-bank of river (east coast of Goose Island)",
+    "notes": "",
     "retired": false,
-    "creator": "65da43e98966266b5eb496c3",
-    "createdAt": "2025-03-22 19:13:13.503000",
-    "updatedAt": "2025-03-22 19:16:44.324000",
+    "creator": "5e94888191fc50001775feb5",
+    "createdAt": "2024-11-01 22:59:34.169000",
+    "updatedAt": "2024-11-03 01:18:30.572000",
     "__v": 0,
-    "projectArea": "Wildmile"
+    "projectArea": "EastSideGooseIsland",
+    "zone": "giog"
   }
 }
