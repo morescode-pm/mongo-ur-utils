@@ -46,3 +46,4 @@ cv_results/*.json
 /mongo_exports/*.json
 /mongo_exports/*.zip
 
+*.zip
