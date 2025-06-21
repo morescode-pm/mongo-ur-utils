@@ -162,17 +162,6 @@ def export_collection(db, collection_name, download_type):
 
     print(f"Successfully exported schema and documents for {collection_name} to {OUTPUT_DIR}")
 
-def zip_output_files(zip_name="mongo_exports/mongo_exports.zip"):
-
-    with open(os.path.join(OUTPUT_DIR, f"samples_{collection_name}.json"), "w") as f:
-        json.dump(samples, f, indent=2, default=str)
-
-def zip_output_files(zip_name="mongo_exports/mongo_exports.zip"):
-    with ZipFile(zip_name, 'w') as zipf:
-        for root, _, files in os.walk(OUTPUT_DIR):
-            for file in files:
-                zipf.write(os.path.join(root, file), arcname=file)
-
 def convert_sets_to_lists(obj):
     if isinstance(obj, dict):
         return {k: convert_sets_to_lists(v) for k, v in obj.items()}
@@ -201,6 +190,3 @@ for coll_name in TARGET_COLLECTIONS:
     else:
         print(f"⚠️ Collection not found: {coll_name}")
 
-# --- Zip everything ---
-zip_output_files()
-print("✅ Done! Exported schemas and samples to mongo_exports.zip")
