@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # MongoDB connection configuration
-MONGO_URI = os.getenv("MONGO_URI_DEV", "mongodb://localhost:27017")
+MONGO_URI = os.getenv("MONGO_URI_PROD", "mongodb://localhost:27017")
 DB_NAME = os.getenv("MONGO_DB", "urbanrivers")
 # COLLECTION_NAME = os.getenv("MONGO_COLLECTION", "medias")
 
@@ -93,9 +93,14 @@ def convert_sets_to_lists(obj):
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 
-# --- Process all collections ---
-for coll_name in db.list_collection_names():
-    export_collection(db, coll_name)
+# --- Only export specific collections ---
+target_collections = ["cameratrapmedias", "deploymentlocations", "observations"]
+
+for coll_name in target_collections:
+    if coll_name in db.list_collection_names():
+        export_collection(db, coll_name)
+    else:
+        print(f"⚠️ Collection not found: {coll_name}")
 
 # --- Zip everything ---
 zip_output_files()
