@@ -3,6 +3,7 @@ import argparse
 import uuid
 from datetime import timedelta
 import os # Added import
+import hashlib # For deterministic IDs
 
 def generate_event_ids(input_file_path, output_file_path_detailed, output_file_path_summary, time_threshold_seconds):
     """
@@ -31,127 +32,163 @@ def generate_event_ids(input_file_path, output_file_path_detailed, output_file_p
         print(f"Error loading CSV: {e}")
         return
 
-    # --- Start of Step 2: Main Logic Implementation ---
-
-    # **Preprocessing**
+    # --- Preprocessing ---
     print("Preprocessing data...")
-    # Convert eventStart and eventEnd to datetime objects
-    # Using errors='coerce' will turn unparseable dates into NaT (Not a Time)
+    # Convert eventStart and eventEnd to datetime objects.
+    # Rows that fail conversion will have NaT in these columns.
     df['eventStart'] = pd.to_datetime(df['eventStart'], errors='coerce')
     df['eventEnd'] = pd.to_datetime(df['eventEnd'], errors='coerce')
 
-    # Drop rows where eventStart or eventEnd could not be parsed
-    df.dropna(subset=['eventStart', 'eventEnd'], inplace=True)
-    print(f"Shape after datetime conversion and dropping NaT: {df.shape}")
+    # Initialize eventID column for all rows in the main DataFrame.
+    # It will remain None for rows not meeting the event criteria.
+    df['eventID'] = None
 
-    # Filter out rows:
-    # - Where scientificName is empty/NaN
-    # - Where observationType is not 'animal' (case-insensitive)
-    # - Where deploymentID is empty/NaN (important for grouping)
-    df.dropna(subset=['scientificName', 'deploymentID'], inplace=True)
-    df = df[df['scientificName'].str.strip() != '']
-    # Ensure observationType is string before .str.lower()
+    # Define criteria for observations that can be part of an animal event.
+    # These are: valid eventStart, observationType 'animal', and present scientificName & deploymentID.
+    # Ensure observationType is string to use .str methods.
     df['observationType'] = df['observationType'].astype(str)
-    df = df[df['observationType'].str.lower() == 'animal']
-    print(f"Shape after filtering for animal observations with scientificName and deploymentID: {df.shape}")
 
-    if df.empty:
-        print("No valid animal observations found after preprocessing. Exiting.")
-        # Save empty detailed output
-        df['eventID'] = None # Ensure column exists
-        df.to_csv(output_file_path_detailed, index=False)
-        print(f"Empty detailed output saved to {output_file_path_detailed}")
+    animal_criteria = (
+        df['eventStart'].notna() &
+        df['observationType'].str.lower().eq('animal') &
+        df['scientificName'].notna() & (df['scientificName'].str.strip() != '') &
+        df['deploymentID'].notna() & (df['deploymentID'].astype(str).str.strip() != '')
+    )
+
+    # Create 'animal_df' containing only rows eligible for event processing.
+    # A copy is used to avoid SettingWithCopyWarning on subsequent modifications.
+    animal_df = df[animal_criteria].copy()
+    print(f"Total rows in input: {df.shape[0]}")
+    print(f"Rows eligible for event processing: {animal_df.shape[0]}")
+
+    if animal_df.empty:
+        print("No observations eligible for event ID generation were found.")
+        # Save the main DataFrame (all rows, but no eventIDs generated)
+        try:
+            abs_detailed_path = os.path.abspath(output_file_path_detailed)
+            print(f"Attempting to save detailed output (no animal events) to: {abs_detailed_path}")
+            df.to_csv(output_file_path_detailed, index=False)
+            print(f"Detailed output saved to {output_file_path_detailed}")
+        except Exception as e:
+            print(f"Error saving detailed output: {e}")
+
         if output_file_path_summary:
+            # If summary output is requested, save an empty summary file.
             summary_df = pd.DataFrame(columns=[
                 'eventID', 'deploymentID', 'scientificName',
                 'min_event_start', 'max_event_end', 'observation_count'
             ])
-            summary_df.to_csv(output_file_path_summary, index=False)
-            print(f"Empty summary output saved to {output_file_path_summary}")
+            try:
+                abs_summary_path = os.path.abspath(output_file_path_summary)
+                print(f"Attempting to save empty summary output to: {abs_summary_path}")
+                summary_df.to_csv(output_file_path_summary, index=False)
+                print(f"Empty summary output saved to {output_file_path_summary}")
+            except Exception as e:
+                print(f"Error saving summary output: {e}")
         return
 
-    # **Sort Data**
-    # Sort by deploymentID, scientificName, and then eventStart
-    print("Sorting data...")
-    df.sort_values(by=['deploymentID', 'scientificName', 'eventStart'], inplace=True)
+    # Sort 'animal_df' to process observations chronologically per deployment/species.
+    # This is crucial for correct event grouping.
+    print("Sorting eligible animal observations for event processing...")
+    animal_df.sort_values(by=['deploymentID', 'scientificName', 'eventStart'], inplace=True)
 
-    # **Event Grouping and eventID Generation**
-    print("Grouping events and generating eventIDs...")
-    df['eventID'] = None  # Initialize eventID column
+    # --- Event Grouping and Deterministic EventID Generation (operates on 'animal_df') ---
+    print("Generating eventIDs for eligible animal observations...")
+
+    # animal_event_ids_map stores {original_df_index: event_id} for rows in animal_df.
+    # This allows updating the main 'df' correctly after processing 'animal_df'.
+    animal_event_ids_map = {}
     current_event_id = None
     last_event_end_time = pd.NaT
     last_deployment_id = None
     last_scientific_name = None
 
-    # Create a list to store the eventID for each row
-    event_ids_list = []
-    # Convert time_threshold_seconds to a timedelta object for comparison
     time_threshold_delta = timedelta(seconds=time_threshold_seconds)
 
-    for index, row in df.iterrows():
-        # Check if we are starting a new group (different deployment or species)
+    for index, row in animal_df.iterrows(): # 'index' is the original index from the main 'df'.
+        new_event_initiated = False
+        # Determine if a new event should start:
+        # - If deploymentID or scientificName changes.
+        # - Or, if the time since the last observation's end exceeds the defined threshold.
         if row['deploymentID'] != last_deployment_id or row['scientificName'] != last_scientific_name:
-            # Start of a new group (different deployment or species), so definitely a new event
-            current_event_id = str(uuid.uuid4())[:8]
-            last_event_end_time = row['eventEnd']
-        elif pd.isna(last_event_end_time) or (row['eventStart'] - last_event_end_time > time_threshold_delta):
-            # Same deployment and species, but time difference is too large, so new event
-            current_event_id = str(uuid.uuid4())[:8]
-            last_event_end_time = row['eventEnd']
+            new_event_initiated = True
+        elif pd.isna(last_event_end_time) or \
+             (row['eventStart'] - last_event_end_time > time_threshold_delta):
+            new_event_initiated = True
+
+        if new_event_initiated:
+            # Generate a deterministic eventID.
+            # Based on: deploymentID, scientificName, and eventStart of the first observation in this event.
+            # Using .isoformat() for the timestamp ensures a consistent string representation.
+            timestamp_str = row['eventStart'].isoformat()
+            id_components = f"{row['deploymentID']}_{row['scientificName']}_{timestamp_str}"
+
+            sha256_hash = hashlib.sha256(id_components.encode('utf-8')).hexdigest()
+            current_event_id = sha256_hash[:8] # Use the first 8 characters of the hash.
+
+            last_event_end_time = row['eventEnd'] # Initialize/reset the end time for this new event.
         else:
-            # Part of the current event, update the event's end time if current observation ends later
+            # This observation is part of the ongoing event.
+            # Update the event's overall end time if this observation ends later.
             if row['eventEnd'] > last_event_end_time:
                 last_event_end_time = row['eventEnd']
 
-        event_ids_list.append(current_event_id)
+        animal_event_ids_map[index] = current_event_id
         last_deployment_id = row['deploymentID']
         last_scientific_name = row['scientificName']
 
-    df['eventID'] = event_ids_list
-    print("EventID generation complete.")
+    # Apply the generated eventIDs back to the main DataFrame 'df'.
+    # Rows not included in 'animal_df' (e.g., blanks, humans) will retain their initial None eventID.
+    for original_idx, event_id_val in animal_event_ids_map.items():
+        df.loc[original_idx, 'eventID'] = event_id_val
 
-    # Save the detailed output (moved before summary generation for clarity)
+    print("EventID assignment to main DataFrame complete.")
+
+    # --- Save Detailed Output ---
+    # The main DataFrame 'df' now contains all original (parseable) rows,
+    # with 'eventID' populated for relevant animal observations.
     try:
         abs_detailed_path = os.path.abspath(output_file_path_detailed)
-        print(f"Attempting to save detailed output to absolute path: {abs_detailed_path}")
+        print(f"Attempting to save detailed output to: {abs_detailed_path}")
         df.to_csv(output_file_path_detailed, index=False)
-        print(f"Detailed output saved to {output_file_path_detailed} (absolute: {abs_detailed_path})")
+        print(f"Detailed output saved to {output_file_path_detailed}")
     except Exception as e:
         print(f"Error saving detailed output: {e}")
 
-    # --- End of Step 2 ---
-
-    # --- Start of Step 3: Summary Logic Implementation ---
+    # --- Summary File Logic (Optional) ---
     if output_file_path_summary:
-        if df.empty or 'eventID' not in df.columns or df['eventID'].isna().all():
-            print("No events to summarize (DataFrame is empty or eventIDs are all NaN).")
-            # Create an empty summary DataFrame with correct columns
+        # Create the summary only from rows that were successfully assigned an eventID.
+        summary_source_df = df[df['eventID'].notna()].copy()
+
+        if summary_source_df.empty:
+            print("No events to summarize (no rows were assigned an eventID).")
             summary_df = pd.DataFrame(columns=[
                 'eventID', 'deploymentID', 'scientificName',
                 'min_event_start', 'max_event_end', 'observation_count'
             ])
         else:
             print("Generating event summary...")
-            # Group by eventID and aggregate
-            summary_df = df.groupby('eventID').agg(
-                deploymentID=('deploymentID', 'first'),  # Should be the same for all rows in an event
-                scientificName=('scientificName', 'first'), # Should be the same
+            # Group by the generated eventID and aggregate required information.
+            summary_df = summary_source_df.groupby('eventID').agg(
+                deploymentID=('deploymentID', 'first'),
+                scientificName=('scientificName', 'first'),
                 min_event_start=('eventStart', 'min'),
                 max_event_end=('eventEnd', 'max'),
-                observation_count=('observationID', 'count') # Count unique observationIDs within the event
+                observation_count=('observationID', 'count') # Count of original observations in this event.
             ).reset_index()
             print("Event summary generation complete.")
 
         try:
             abs_summary_path = os.path.abspath(output_file_path_summary)
-            print(f"Attempting to save summary output to absolute path: {abs_summary_path}")
+            print(f"Attempting to save summary output to: {abs_summary_path}")
             summary_df.to_csv(output_file_path_summary, index=False)
-            print(f"Summary output saved to {output_file_path_summary} (absolute: {abs_summary_path})")
+            print(f"Summary output saved to {output_file_path_summary}")
         except Exception as e:
             print(f"Error saving summary output: {e}")
-    # --- End of Step 3 ---
 
 if __name__ == "__main__":
+    # --- Command-Line Argument Parsing ---
+    # Comments for argparse are minimal as the help strings are descriptive.
     parser = argparse.ArgumentParser(description="Generate Event IDs for animal observations.")
     parser.add_argument("input_file",
                         help="Path to the input observations CSV file.",
