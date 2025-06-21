@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
-cv_results/*.json filter=lfs diff=lfs merge=lfs -text
+ai_results/*.json filter=lfs diff=lfs merge=lfs -text
+output/*.csv filter=lfs diff=lfs merge=lfs -text
