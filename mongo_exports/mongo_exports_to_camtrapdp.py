@@ -2,6 +2,7 @@ import json
 import csv
 from datetime import datetime, timezone
 import os
+import argparse
 
 # --- Camtrap DP Data Structures ---
 
@@ -211,14 +212,21 @@ def convert_observations_to_camtrapdp(mongo_observations_list, dp_headers, media
 
 # --- Main Processing ---
 
-def main():
+def main_processing(mode):
     # Define input file paths
-    deployments_in_file = "mongo_exports/all_docs_deploymentlocations.json"
-    media_in_file = "mongo_exports/all_docs_cameratrapmedias.json"
-    observations_in_file = "mongo_exports/all_docs_observations.json"
+    if mode == "full":
+        deployments_in_file = "all_docs_deploymentlocations.json"
+        media_in_file = "all_docs_cameratrapmedias.json"
+        observations_in_file = "all_docs_observations.json"
+    elif mode == "sample":
+        deployments_in_file = "samples_deploymentlocations.json"
+        media_in_file = "samples_cameratrapmedias.json"
+        observations_in_file = "samples_observations.json"
+    else:
+        print("=== ERROR: use 'full' for all files or 'sample' for sample files")
 
     # Define output directory and file paths
-    output_dir = "output"
+    output_dir = "../output"
     os.makedirs(output_dir, exist_ok=True)
     deployments_out_csv = os.path.join(output_dir, "deployments.csv")
     media_out_csv = os.path.join(output_dir, "media.csv")
@@ -275,9 +283,9 @@ def main():
             print(f"Warning: Could not decode JSON from schema file: {schema_file_path}.")
             return []
 
-    deployments_headers = get_ordered_field_names("camtrap_standards/definitions/deployments-table-schema.json")
-    media_headers = get_ordered_field_names("camtrap_standards/definitions/media-table-schema.json")
-    observations_headers = get_ordered_field_names("camtrap_standards/definitions/observations-table-schema.json")
+    deployments_headers = get_ordered_field_names("../camtrap_standards/definitions/deployments-table-schema.json")
+    media_headers = get_ordered_field_names("../camtrap_standards/definitions/media-table-schema.json")
+    observations_headers = get_ordered_field_names("../camtrap_standards/definitions/observations-table-schema.json")
 
     # --- Perform conversions ---
     # For now, these will return empty lists as the core logic is not yet implemented.
@@ -358,4 +366,19 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        description="Process mongo exports to camtrapdp output csvs."
+    )
+    parser.add_argument(
+        "--mode",
+        type=str,
+        choices=["sample", "full"],
+        default="sample",
+        help="Specify 'sample' to process one sample of each collection type, or 'full' to process all documents. Defaults to 'sample'."
+    )
+
+    args = parser.parse_args()
+
+    main_processing(args.mode)
+
+    print(f"Camtrap DP processing complete for {args.mode} record.")
