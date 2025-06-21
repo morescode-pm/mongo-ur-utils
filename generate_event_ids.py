@@ -15,11 +15,10 @@ def generate_event_ids(input_file_path, output_file_path_detailed, output_file_p
         output_file_path_summary (str): Path to save the summary output CSV (optional).
         time_threshold_seconds (int): Time threshold in seconds to group observations.
     """
-    print(f"Starting event ID generation with threshold: {time_threshold_seconds} seconds.")
-    print(f"Input file: {input_file_path}")
-    print(f"Detailed output file: {output_file_path_detailed}")
-    if output_file_path_summary:
-        print(f"Summary output file: {output_file_path_summary}")
+    print(f"Starting event ID generation. Input file (will be overwritten): {input_file_path}")
+    print(f"Time threshold for event grouping: {time_threshold_seconds} seconds.")
+    # Removed print statements for output_file_path_detailed and output_file_path_summary
+    # as detailed is same as input, and summary is removed.
 
     # Load the observations CSV
     try:
@@ -63,28 +62,16 @@ def generate_event_ids(input_file_path, output_file_path_detailed, output_file_p
 
     if animal_df.empty:
         print("No observations eligible for event ID generation were found.")
-        # Save the main DataFrame (all rows, but no eventIDs generated)
+        # If no animal events, save the original DataFrame (all rows, eventID column is None)
+        # This effectively means overwriting the input file with itself but with an eventID column.
         try:
-            abs_detailed_path = os.path.abspath(output_file_path_detailed)
-            print(f"Attempting to save detailed output (no animal events) to: {abs_detailed_path}")
+            abs_output_path = os.path.abspath(output_file_path_detailed) # This is input_file_path
+            print(f"No eligible animal observations. Overwriting input file with an added (empty) eventID column: {abs_output_path}")
             df.to_csv(output_file_path_detailed, index=False)
-            print(f"Detailed output saved to {output_file_path_detailed}")
+            print(f"File overwritten at {output_file_path_detailed}")
         except Exception as e:
-            print(f"Error saving detailed output: {e}")
-
-        if output_file_path_summary:
-            # If summary output is requested, save an empty summary file.
-            summary_df = pd.DataFrame(columns=[
-                'eventID', 'deploymentID', 'scientificName',
-                'min_event_start', 'max_event_end', 'observation_count'
-            ])
-            try:
-                abs_summary_path = os.path.abspath(output_file_path_summary)
-                print(f"Attempting to save empty summary output to: {abs_summary_path}")
-                summary_df.to_csv(output_file_path_summary, index=False)
-                print(f"Empty summary output saved to {output_file_path_summary}")
-            except Exception as e:
-                print(f"Error saving summary output: {e}")
+            print(f"Error saving output file: {e}")
+        # Removed summary file logic for this case.
         return
 
     # Sort 'animal_df' to process observations chronologically per deployment/species.
@@ -144,110 +131,40 @@ def generate_event_ids(input_file_path, output_file_path_detailed, output_file_p
 
     print("EventID assignment to main DataFrame complete.")
 
-    # --- Save Detailed Output ---
+    # --- Save Output ---
     # The main DataFrame 'df' now contains all original (parseable) rows,
     # with 'eventID' populated for relevant animal observations.
+    # This DataFrame will overwrite the original input file.
     try:
-        abs_detailed_path = os.path.abspath(output_file_path_detailed)
-        print(f"Attempting to save detailed output to: {abs_detailed_path}")
+        abs_output_path = os.path.abspath(output_file_path_detailed) # output_file_path_detailed is now same as input_file_path
+        print(f"Attempting to overwrite input file with processed data at: {abs_output_path}")
         df.to_csv(output_file_path_detailed, index=False)
-        print(f"Detailed output saved to {output_file_path_detailed}")
+        print(f"Successfully overwrote file at {output_file_path_detailed}")
     except Exception as e:
-        print(f"Error saving detailed output: {e}")
+        print(f"Error saving output file: {e}")
 
-    # --- Summary File Logic (Optional) ---
-    if output_file_path_summary:
-        # Create the summary only from rows that were successfully assigned an eventID.
-        summary_source_df = df[df['eventID'].notna()].copy()
-
-        if summary_source_df.empty:
-            print("No events to summarize (no rows were assigned an eventID).")
-            summary_df = pd.DataFrame(columns=[
-                'eventID', 'deploymentID', 'scientificName',
-                'min_event_start', 'max_event_end', 'observation_count'
-            ])
-        else:
-            print("Generating event summary...")
-            # Group by the generated eventID and aggregate required information.
-            summary_df = summary_source_df.groupby('eventID').agg(
-                deploymentID=('deploymentID', 'first'),
-                scientificName=('scientificName', 'first'),
-                min_event_start=('eventStart', 'min'),
-                max_event_end=('eventEnd', 'max'),
-                observation_count=('observationID', 'count') # Count of original observations in this event.
-            ).reset_index()
-            print("Event summary generation complete.")
-
-        try:
-            abs_summary_path = os.path.abspath(output_file_path_summary)
-            print(f"Attempting to save summary output to: {abs_summary_path}")
-            summary_df.to_csv(output_file_path_summary, index=False)
-            print(f"Summary output saved to {output_file_path_summary}")
-        except Exception as e:
-            print(f"Error saving summary output: {e}")
+    # Summary logic has been removed as per new requirements.
 
 if __name__ == "__main__":
     # --- Command-Line Argument Parsing ---
-    # Comments for argparse are minimal as the help strings are descriptive.
-    parser = argparse.ArgumentParser(description="Generate Event IDs for animal observations.")
-    parser.add_argument("input_file",
-                        help="Path to the input observations CSV file.",
-                        default="output/observations.csv",
-                        nargs='?') # Makes it optional, using default if not provided
-    parser.add_argument("--output_detailed",
-                        help="Path to save the detailed output CSV file with eventIDs.",
-                        default="output/observations_with_eventIDs.csv")
-    parser.add_argument("--output_summary",
-                        help="Path to save the summary event CSV file (optional).",
-                        default=None, # No summary by default
-                        nargs='?') # Makes it optional
+    parser = argparse.ArgumentParser(
+        description="Generate Event IDs for animal observations and overwrite the input file."
+    )
+    parser.add_argument("--input_file",  # Changed from positional to named argument
+                        help="Path to the observations CSV file. This file will be overwritten.",
+                        required=True)
     parser.add_argument("--threshold",
                         type=int,
-                        help="Time threshold in seconds for grouping events.",
-                        default=180) # 3 minutes default
+                        help="Time threshold in seconds for grouping events (default: 180).",
+                        default=180)
 
     args = parser.parse_args()
 
-    # Use a default for output_summary if the user provides the flag without a value
-    # (which argparse interprets as None, but we might want a default filename)
-    # However, the current setup is fine: if --output_summary is given, args.output_summary will be its value.
-    # If not given, it's None. If given without value, it's also None (if nargs='?').
-    # For simplicity, if user wants summary, they should provide a path.
-    # The problem statement implies it's an "optional script", so making it generate a default name
-    # if flag is present but no value is given might be overcomplicating.
-    # The current default=None means it won't run unless specified.
-
-    # Let's refine the summary output path. If the flag is present, use a default name if no specific name is provided.
-    # No, the current argparse setup is:
-    # - Not providing --output_summary: args.output_summary is None
-    # - Providing --output_summary some_path: args.output_summary is "some_path"
-    # - Providing --output_summary (with no path following it, if that's how it's called):
-    #   This actually depends on how it's called. If it's `python script.py --output_summary`,
-    #   argparse might expect a value. If `nargs='?'` and `const` is set, it can take a value if provided,
-    #   or `const` if flag is present without value.
-    # For now, the simplest is: if output_summary is not None, then user provided a path.
-    # The prompt said "optional script that creates another csv file", implying it's a deliberate action.
-    # Let's stick to `default=None` for `output_summary` and if the user wants it, they provide the path.
-    # The plan says "controlled by whether output_file_path_summary is provided".
-
-    summary_output_path = args.output_summary
-    # If user *wants* a summary but doesn't specify a name, we can default it.
-    # However, the current setup requires them to specify a name if they use the flag.
-    # Let's make it so if they *just* type `--output_summary` without a path, it defaults.
-    # This requires `nargs='?'` and a `const` value.
-
-    # Re-evaluating: The plan step says "controlled by whether output_file_path_summary is provided".
-    # The current `default=None` and `nargs='?'` for `output_summary` means:
-    #   - if `--output_summary` is not used, `args.output_summary` is `None`.
-    #   - if `--output_summary my_summary.csv` is used, `args.output_summary` is `my_summary.csv`.
-    #   - if `--output_summary` is used alone at the end of the command, `args.output_summary` is `None`.
-    # This last case is tricky. Let's make it simpler: if they want a summary, they provide the path.
-    # So `default=None` without `nargs='?'` or with `nargs='?'` but expecting a value.
-    # The current `nargs='?'` and `default=None` is fine. `args.output_summary` will be `None` unless a path is given.
-
+    # Call the main function with the file path for both input and detailed output,
+    # and None for the summary output path as it's no longer generated.
     generate_event_ids(args.input_file,
-                         args.output_detailed,
-                         args.output_summary,
+                         args.input_file,  # Output detailed path is same as input
+                         None,             # No summary output
                          args.threshold)
 
 print("Script finished.")
