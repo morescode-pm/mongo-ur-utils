@@ -73,7 +73,7 @@ def export_collection(db, collection_name):
     with open(os.path.join(OUTPUT_DIR, f"samples_{collection_name}.json"), "w") as f:
         json.dump(samples, f, indent=2, default=str)
 
-def zip_output_files(zip_name="mongo_exports.zip"):
+def zip_output_files(zip_name="mongo_exports/mongo_exports.zip"):
     with ZipFile(zip_name, 'w') as zipf:
         for root, _, files in os.walk(OUTPUT_DIR):
             for file in files:
