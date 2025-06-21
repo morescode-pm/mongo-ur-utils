@@ -39,7 +39,11 @@ ENV/
 mongodb_formatted_detections.json
 
 # Large files (handled by Git LFS)
-cv_results/*.json
+ai_results/*.json
 
 # Logs
 *.log
+/mongo_exports/*.json
+/mongo_exports/*.zip
+
+*.zip

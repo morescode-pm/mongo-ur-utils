@@ -1,0 +1,16 @@
+deploymentID,locationID,locationName,latitude,longitude,coordinateUncertainty,deploymentStart,deploymentEnd,setupBy,cameraID,cameraModel,cameraDelay,cameraHeight,cameraDepth,cameraTilt,cameraHeading,detectionDistance,timestampIssues,baitUse,featureType,habitat,deploymentGroups,deploymentTags,deploymentComments
+665938b4a122a53b9a6eb5b6,665938b4a122a53b9a6eb5b6,Wildmile-carbit,41.907173865997606,-87.65160404447708,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,land,
+66805e5032e0bfad28d7bec3,66805e5032e0bfad28d7bec3,southbranch-sampson-1,41.84873535383167,-87.65962840191251,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,cool,Not active
+66806bd132e0bfad28d7bf07,66806bd132e0bfad28d7bf07,Bubbly Creek-South,41.83804314699654,-87.66321651865067,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,bubbly|Cooltag,
+66b2e6acf35d63156cb4f528,66b2e6acf35d63156cb4f528,Wildmile-A,41.906696798344115,-87.65178898752102,,,,66807de2e15deade33d03d14,,,,,,,,,,,,,,floatinggardens,XJ Test Location PIN
+67255d56aae4d901ce8df0d1,67255d56aae4d901ce8df0d1,EastSideGooseIsland-giog-2,41.90248639858393,-87.65684107188882,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,beavercam,
+672580db0121217f8e205d12,672580db0121217f8e205d12,buttmunch,41.909818071279915,-87.65666193243452,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,,eats ass
+6726bd83a2bea09a03627823,6726bd83a2bea09a03627823,Eastsidegooseisland-A,41.906379438924205,-87.6586153635253,,,,,,,,,,,,,,,,,,test,
+6727efe26a3b2c6bb60b844f,6727efe26a3b2c6bb60b844f,Bubbly Creek-island1,41.841443979050894,-87.66505205686131,,,,,,,,,,,,,,,,,,,
+6727fe2e5cc879df980900c0,6727fe2e5cc879df980900c0,Prologis-1,41.8480541398732,-87.65021316194269,,,,,,,,,,,,,,,,,,floatinggardens,
+6728fcf5b88cfb01e9bd4072,6728fcf5b88cfb01e9bd4072,Wildmile-B1,41.906702386720355,-87.65182903129573,,,,,,,,,,,,,,,,,,floatinggardens,
+672a9c473c67cf4fd76824f9,672a9c473c67cf4fd76824f9,River Park-bridge,41.97219815881411,-87.70371372767735,,,,,,,,,,,,,,,,,,,
+672ab2404478527fc4d47076,672ab2404478527fc4d47076,Wildmile-division,41.9036614577351,-87.64928474469957,,,,,,,,,,,,,,,,,,,
+672bb05f7a4b7a9694bf0d63,672bb05f7a4b7a9694bf0d63,Wildmile-D,41.90708097362753,-87.65224126897125,,,,,,,,,,,,,,,,,,floatinggardens|Cooltag,
+67c9dfcefc814cacdba699b6,67c9dfcefc814cacdba699b6,Bubbly Creek-A,41.84060474728881,-87.66400895239506,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,beavercam|Cooltag,
+67cf5e4d36cdd10fcafc2b15,67cf5e4d36cdd10fcafc2b15,Wildmile-island2,41.90866071395257,-87.65342506735261,,,,5e94888191fc50001775feb5,,,,,,,,,,,,,,floatinggardens,
