@@ -1,0 +1,75 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "x": [
+    "int"
+  ],
+  "y": [
+    "int"
+  ],
+  "locationCode": [
+    "str"
+  ],
+  "model": [
+    "str"
+  ],
+  "shape": [
+    "str"
+  ],
+  "orientation": [
+    "str"
+  ],
+  "flipped": [
+    "bool"
+  ],
+  "notes": [
+    "str"
+  ],
+  "tag": [
+    "str"
+  ],
+  "__v": [
+    "int"
+  ],
+  "tags": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "str"
+    ]
+  },
+  "island_name": [
+    "str"
+  ],
+  "project": [
+    "str"
+  ],
+  "projectId": [
+    "ObjectId"
+  ],
+  "sectionId": [
+    "ObjectId"
+  ],
+  "placement": {
+    "section": {
+      "x": [
+        "int"
+      ],
+      "y": [
+        "int"
+      ]
+    },
+    "project": {
+      "x": [
+        "int"
+      ],
+      "y": [
+        "int"
+      ]
+    }
+  },
+  "deleted": [
+    "bool"
+  ]
+}

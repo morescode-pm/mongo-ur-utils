@@ -1,0 +1,14 @@
+{
+  "unknown": {
+    "_id": "5fe5402eaaced000178c63c5",
+    "tags": [],
+    "deleted": false,
+    "itemId": "5fc92c3ae308b20017c3e466",
+    "logId": "5fe53f54aaced000178c6362",
+    "creator": "5fe53247aaced000178c62e5",
+    "__v": 0,
+    "createdAt": "2020-12-25 01:28:14.380000",
+    "updatedAt": "2020-12-25 01:28:14.380000",
+    "quantity": 34
+  }
+}

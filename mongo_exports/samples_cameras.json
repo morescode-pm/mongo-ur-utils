@@ -1,0 +1,26 @@
+{
+  "unknown": {
+    "_id": "67df039254793e7ea54ebb7d",
+    "name": "UR042",
+    "serial": "YNXA-VXJ-MGED 2H427I0391",
+    "purchaseDate": "2025-02-22 06:00:00",
+    "connectivity": "Cellular",
+    "notes": "possibly purchased a few days prior to Feb 22; Serial Number fields includes multiple possible SN#'s from camera body",
+    "comments": [],
+    "model": "flex s",
+    "manufacturer": "spypoint camera",
+    "features": {
+      "nightVision": false,
+      "motionDetection": false,
+      "waterproof": false,
+      "video": false,
+      "audio": false,
+      "timeLapse": false
+    },
+    "creator": "65da43e98966266b5eb496c3",
+    "installationDate": "2025-03-22 18:38:10.313000",
+    "createdAt": "2025-03-22 18:38:10.314000",
+    "updatedAt": "2025-03-22 18:38:10.314000",
+    "__v": 0
+  }
+}

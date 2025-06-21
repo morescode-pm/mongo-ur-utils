@@ -1,0 +1,215 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "mediaID": [
+    "str"
+  ],
+  "imageHash": [
+    "str"
+  ],
+  "timestamp": [
+    "datetime"
+  ],
+  "publicURL": [
+    "str"
+  ],
+  "relativePath": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "str"
+    ]
+  },
+  "filePath": [
+    "str"
+  ],
+  "filePublic": [
+    "bool"
+  ],
+  "fileName": [
+    "str"
+  ],
+  "fileMediatype": [
+    "str"
+  ],
+  "exifData": {
+    "Make": [
+      "str"
+    ],
+    "Model": [
+      "str"
+    ],
+    "Software": [
+      "str"
+    ],
+    "DateTime": [
+      "str"
+    ],
+    "ExifVersion": [
+      "str"
+    ],
+    "DateTimeOriginal": [
+      "str"
+    ],
+    "FocalLength": [
+      "float"
+    ],
+    "ExposureTime": [
+      "float"
+    ],
+    "FNumber": [
+      "float"
+    ],
+    "ISOSpeedRatings": [
+      "int"
+    ]
+  },
+  "exifExtracted": [
+    "bool"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "fileLocations": {
+    "type": "list",
+    "items": {
+      "publicURL": [
+        "str"
+      ],
+      "relativePath": {
+        "type": "list",
+        "items": {},
+        "item_type": [
+          "str"
+        ]
+      },
+      "filePath": [
+        "str"
+      ],
+      "filePublic": [
+        "bool"
+      ],
+      "fileName": [
+        "str"
+      ],
+      "createdAt": [
+        "datetime"
+      ]
+    }
+  },
+  "__v": [
+    "int"
+  ],
+  "accepted": [
+    "bool"
+  ],
+  "consensusStatus": [
+    "str"
+  ],
+  "favorite": [
+    "bool"
+  ],
+  "favoriteCount": [
+    "int"
+  ],
+  "favorites": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "ObjectId"
+    ]
+  },
+  "flagged": [
+    "bool"
+  ],
+  "lastObservation": [
+    "datetime"
+  ],
+  "mediaComments": {
+    "type": "list",
+    "items": {
+      "text": "str",
+      "author": "ObjectId",
+      "timestamp": "datetime",
+      "_id": "ObjectId"
+    }
+  },
+  "needsReview": [
+    "bool"
+  ],
+  "observations": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "ObjectId"
+    ]
+  },
+  "removed": [
+    "bool"
+  ],
+  "reviewCount": [
+    "int"
+  ],
+  "reviewed": [
+    "bool"
+  ],
+  "reviewers": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "ObjectId"
+    ]
+  },
+  "speciesConsensus": {
+    "type": "list",
+    "items": {
+      "observationType": [
+        "str"
+      ],
+      "scientificName": [
+        "NoneType",
+        "str"
+      ],
+      "taxonID": [
+        "NoneType",
+        "str"
+      ],
+      "count": [
+        "int"
+      ],
+      "accepted": [
+        "bool"
+      ],
+      "observationCount": [
+        "int"
+      ],
+      "_id": [
+        "ObjectId"
+      ]
+    }
+  },
+  "updatedAt": [
+    "datetime"
+  ],
+  "aiResults": {
+    "type": "list",
+    "items": {
+      "modelName": [
+        "str"
+      ],
+      "runDate": [
+        "str"
+      ],
+      "confBlank": [
+        "float"
+      ],
+      "confHuman": [
+        "float"
+      ],
+      "confAnimal": [
+        "float"
+      ]
+    }
+  }
+}

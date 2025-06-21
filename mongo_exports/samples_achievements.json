@@ -1,0 +1,60 @@
+{
+  "RANK": {
+    "_id": "679714d7fb7517403711fd85",
+    "name": "Virtue Signaler",
+    "description": "You've helped just enough to show you care, but not much more",
+    "icon": "",
+    "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/d9d97711-df11-411a-a9f2-6d464e709668",
+    "level": 1,
+    "type": "RANK",
+    "domain": "CAMERATRAP",
+    "criteria": [
+      {
+        "type": "imagesReviewed",
+        "threshold": 100,
+        "operator": "gte",
+        "_id": "679714d7fb7517403711fd86"
+      },
+      {
+        "type": "animalsObserved",
+        "threshold": 3,
+        "operator": "gte",
+        "_id": "679714d7fb7517403711fd87"
+      }
+    ],
+    "points": 100,
+    "isActive": true,
+    "createdAt": "2025-01-27 05:08:39.176000",
+    "updatedAt": "2025-02-04 19:31:48.904000",
+    "__v": 0
+  },
+  "MILESTONE": {
+    "_id": "67f186860fe8cfe6859dc435",
+    "name": "Getting Started",
+    "description": "Reviewed your first camera trap image with an animal in it!",
+    "icon": "",
+    "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/ab344cb7-9fad-440b-9a7b-5a94352ae3ea",
+    "level": 1,
+    "type": "MILESTONE",
+    "domain": "CAMERATRAP",
+    "criteria": [
+      {
+        "type": "imagesReviewed",
+        "threshold": 10,
+        "operator": "gte",
+        "_id": "67f186860fe8cfe6859dc436"
+      },
+      {
+        "type": "uniqueSpecies",
+        "threshold": 5,
+        "operator": "gte",
+        "_id": "67f186860fe8cfe6859dc437"
+      }
+    ],
+    "points": 10,
+    "isActive": true,
+    "createdAt": "2025-04-05 19:37:42.720000",
+    "updatedAt": "2025-04-05 19:37:42.720000",
+    "__v": 0
+  }
+}

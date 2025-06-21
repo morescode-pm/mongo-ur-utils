@@ -1,0 +1,856 @@
+{
+  "unknown": {
+    "_id": "5e989ee42dccfd124c9a78e0",
+    "scientificName": "Vernonia gigantea",
+    "botanicPhoto": "https://projects.ncsu.edu/cals/plantbiology/ncsc/rare/images/Lysimachia_quadrifolia_Krings4.jpg",
+    "author": "(Walter) Trel.",
+    "bibliography": "Rep. (Annual) Arkansas Geol. Surv. 1888(4): 189 (1891)",
+    "common_name": "Giant ironweed",
+    "family": "Asteraceae",
+    "family_common_name": "Aster family",
+    "genus": "Vernonia",
+    "genus_id": 92,
+    "id": 152,
+    "image_url": "https://bs.plantnet.org/image/o/770b803213618fe8486f19ea9917f8cf40109fe5",
+    "links": {
+      "self": "/api/v1/species/vernonia-gigantea",
+      "plant": "/api/v1/plants/vernonia-gigantea",
+      "genus": "/api/v1/genus/vernonia"
+    },
+    "rank": "species",
+    "scientific_name": "Vernonia gigantea",
+    "slug": "Vernonia-gigantea",
+    "status": "accepted",
+    "synonyms": [
+      {
+        "id": 446,
+        "name": "Vernonia oligantha",
+        "author": "Greene",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.089Z",
+            "id": "urn:lsid:ipni.org:names:264336-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264336-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 447,
+        "name": "Cacalia gigantea",
+        "author": "Kuntze",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.141Z",
+            "id": "urn:lsid:ipni.org:names:39206-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:39206-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 448,
+        "name": "Vernonia ovalifolia var. purpurea",
+        "author": "Gleason",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.194Z",
+            "id": "urn:lsid:ipni.org:names:264347-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264347-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 449,
+        "name": "Vernonia altissima var. taeniotricha",
+        "author": "S.F.Blake",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.244Z",
+            "id": "urn:lsid:ipni.org:names:263779-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:263779-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 450,
+        "name": "Vernonia altissima var. pubescens",
+        "author": "Daniels",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.290Z",
+            "id": "urn:lsid:ipni.org:names:263778-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:263778-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 451,
+        "name": "Vernonia altissima var. lilacina",
+        "author": "Clute",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.343Z",
+            "id": "urn:lsid:ipni.org:names:263776-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:263776-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 452,
+        "name": "Vernonia altissima var. laxa",
+        "author": "Gleason",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.373Z",
+            "id": "urn:lsid:ipni.org:names:263775-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:263775-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 453,
+        "name": "Vernonia praealta var. hebecarpa",
+        "author": "DC.",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.413Z",
+            "id": "urn:lsid:ipni.org:names:264408-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264408-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 454,
+        "name": "Vernonia gigantea var. ovalifolia",
+        "author": "(Torr. & A.Gray) D.B.Ward",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.456Z",
+            "id": "urn:lsid:ipni.org:names:77129760-1",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:77129760-1",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 455,
+        "name": "Vernonia gigantea subsp. pubescens",
+        "author": "E.Morris",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.495Z",
+            "id": "urn:lsid:ipni.org:names:1004873-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1004873-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 456,
+        "name": "Vernonia gigantea var. praealta",
+        "author": "Daniels",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.549Z",
+            "id": "urn:lsid:ipni.org:names:264083-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264083-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 457,
+        "name": "Vernonia gigantea subsp. ovalifolia",
+        "author": "(Torr. & A.Gray) Urbatsch",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.601Z",
+            "id": "urn:lsid:ipni.org:names:264082-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264082-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 458,
+        "name": "Vernonia maxima",
+        "author": "Small",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.635Z",
+            "id": "urn:lsid:ipni.org:names:264253-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264253-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 459,
+        "name": "Vernonia maxima subsp. pubescens",
+        "author": "E.Morris",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.675Z",
+            "id": "urn:lsid:ipni.org:names:264254-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264254-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 460,
+        "name": "Chrysocoma praealta",
+        "author": "Desf.",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.704Z",
+            "id": "urn:lsid:ipni.org:names:193988-1",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:193988-1",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 461,
+        "name": "Chrysocoma gigantea",
+        "author": "Walter",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.747Z",
+            "id": "urn:lsid:ipni.org:names:193922-1",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:193922-1",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 462,
+        "name": "Vernonia praealta",
+        "author": "Michx.",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.793Z",
+            "id": "urn:lsid:ipni.org:names:259120-1",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:259120-1",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 463,
+        "name": "Vernonia altissima var. brevipappa",
+        "author": "Gleason",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.830Z",
+            "id": "urn:lsid:ipni.org:names:263774-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:263774-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 464,
+        "name": "Vernonia altissima f. alba",
+        "author": "Moldenke",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.881Z",
+            "id": "urn:lsid:ipni.org:names:263773-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:263773-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      },
+      {
+        "id": 465,
+        "name": "Vernonia ovalifolia",
+        "author": "Torr. & A.Gray",
+        "sources": [
+          {
+            "last_update": "2022-12-06T18:22:01.922Z",
+            "id": "urn:lsid:ipni.org:names:264346-2",
+            "name": "POWO",
+            "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:264346-2",
+            "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+          }
+        ]
+      }
+    ],
+    "year": 1891,
+    "common_names": {
+      "deu": [
+        "riesen-vernonie",
+        "hohe scheinaster"
+      ],
+      "eng": [
+        "tall ironweed",
+        "giant ironweed"
+      ],
+      "fra": [
+        "vernonie g\u00e9ante"
+      ],
+      "en": [
+        "Giant ironweed"
+      ],
+      "de": [
+        "Hohe Scheinaster"
+      ]
+    },
+    "distribution": {
+      "native": [
+        "Alabama",
+        "Arkansas",
+        "Florida",
+        "Georgia",
+        "Illinois",
+        "Indiana",
+        "Kansas",
+        "Kentucky",
+        "Louisiana",
+        "Maryland",
+        "Michigan",
+        "Mississippi",
+        "Missouri",
+        "Nebraska",
+        "New York",
+        "North Carolina",
+        "Ohio",
+        "Oklahoma",
+        "Ontario",
+        "Pennsylvania",
+        "South Carolina",
+        "Tennessee",
+        "Texas",
+        "Virginia",
+        "West Virginia"
+      ],
+      "introduced": [
+        "India"
+      ]
+    },
+    "distributions": {
+      "native": [
+        {
+          "id": 144,
+          "name": "Alabama",
+          "slug": "ala",
+          "tdwg_code": "ALA",
+          "tdwg_level": 3,
+          "species_count": 4698,
+          "links": {
+            "self": "/api/v1/distributions/ala",
+            "plants": "/api/v1/distributions/ala/plants",
+            "species": "/api/v1/distributions/ala/species"
+          }
+        },
+        {
+          "id": 227,
+          "name": "Arkansas",
+          "slug": "ark",
+          "tdwg_code": "ARK",
+          "tdwg_level": 3,
+          "species_count": 3236,
+          "links": {
+            "self": "/api/v1/distributions/ark",
+            "plants": "/api/v1/distributions/ark/plants",
+            "species": "/api/v1/distributions/ark/species"
+          }
+        },
+        {
+          "id": 85,
+          "name": "Florida",
+          "slug": "fla",
+          "tdwg_code": "FLA",
+          "tdwg_level": 3,
+          "species_count": 4979,
+          "links": {
+            "self": "/api/v1/distributions/fla",
+            "plants": "/api/v1/distributions/fla/plants",
+            "species": "/api/v1/distributions/fla/species"
+          }
+        },
+        {
+          "id": 191,
+          "name": "Georgia",
+          "slug": "geo",
+          "tdwg_code": "GEO",
+          "tdwg_level": 3,
+          "species_count": 4293,
+          "links": {
+            "self": "/api/v1/distributions/geo",
+            "plants": "/api/v1/distributions/geo/plants",
+            "species": "/api/v1/distributions/geo/species"
+          }
+        },
+        {
+          "id": 145,
+          "name": "Illinois",
+          "slug": "ill",
+          "tdwg_code": "ILL",
+          "tdwg_level": 3,
+          "species_count": 4133,
+          "links": {
+            "self": "/api/v1/distributions/ill",
+            "plants": "/api/v1/distributions/ill/plants",
+            "species": "/api/v1/distributions/ill/species"
+          }
+        },
+        {
+          "id": 230,
+          "name": "Indiana",
+          "slug": "ini",
+          "tdwg_code": "INI",
+          "tdwg_level": 3,
+          "species_count": 3071,
+          "links": {
+            "self": "/api/v1/distributions/ini",
+            "plants": "/api/v1/distributions/ini/plants",
+            "species": "/api/v1/distributions/ini/species"
+          }
+        },
+        {
+          "id": 232,
+          "name": "Kansas",
+          "slug": "kan",
+          "tdwg_code": "KAN",
+          "tdwg_level": 3,
+          "species_count": 2684,
+          "links": {
+            "self": "/api/v1/distributions/kan",
+            "plants": "/api/v1/distributions/kan/plants",
+            "species": "/api/v1/distributions/kan/species"
+          }
+        },
+        {
+          "id": 146,
+          "name": "Kentucky",
+          "slug": "kty",
+          "tdwg_code": "KTY",
+          "tdwg_level": 3,
+          "species_count": 3352,
+          "links": {
+            "self": "/api/v1/distributions/kty",
+            "plants": "/api/v1/distributions/kty/plants",
+            "species": "/api/v1/distributions/kty/species"
+          }
+        },
+        {
+          "id": 205,
+          "name": "Louisiana",
+          "slug": "lou",
+          "tdwg_code": "LOU",
+          "tdwg_level": 3,
+          "species_count": 3588,
+          "links": {
+            "self": "/api/v1/distributions/lou",
+            "plants": "/api/v1/distributions/lou/plants",
+            "species": "/api/v1/distributions/lou/species"
+          }
+        },
+        {
+          "id": 233,
+          "name": "Maryland",
+          "slug": "mry",
+          "tdwg_code": "MRY",
+          "tdwg_level": 3,
+          "species_count": 3972,
+          "links": {
+            "self": "/api/v1/distributions/mry",
+            "plants": "/api/v1/distributions/mry/plants",
+            "species": "/api/v1/distributions/mry/species"
+          }
+        },
+        {
+          "id": 234,
+          "name": "Michigan",
+          "slug": "mic",
+          "tdwg_code": "MIC",
+          "tdwg_level": 3,
+          "species_count": 3351,
+          "links": {
+            "self": "/api/v1/distributions/mic",
+            "plants": "/api/v1/distributions/mic/plants",
+            "species": "/api/v1/distributions/mic/species"
+          }
+        },
+        {
+          "id": 206,
+          "name": "Mississippi",
+          "slug": "msi",
+          "tdwg_code": "MSI",
+          "tdwg_level": 3,
+          "species_count": 3275,
+          "links": {
+            "self": "/api/v1/distributions/msi",
+            "plants": "/api/v1/distributions/msi/plants",
+            "species": "/api/v1/distributions/msi/species"
+          }
+        },
+        {
+          "id": 235,
+          "name": "Missouri",
+          "slug": "mso",
+          "tdwg_code": "MSO",
+          "tdwg_level": 3,
+          "species_count": 3353,
+          "links": {
+            "self": "/api/v1/distributions/mso",
+            "plants": "/api/v1/distributions/mso/plants",
+            "species": "/api/v1/distributions/mso/species"
+          }
+        },
+        {
+          "id": 262,
+          "name": "Nebraska",
+          "slug": "neb",
+          "tdwg_code": "NEB",
+          "tdwg_level": 3,
+          "species_count": 2293,
+          "links": {
+            "self": "/api/v1/distributions/neb",
+            "plants": "/api/v1/distributions/neb/plants",
+            "species": "/api/v1/distributions/neb/species"
+          }
+        },
+        {
+          "id": 237,
+          "name": "New York",
+          "slug": "nwy",
+          "tdwg_code": "NWY",
+          "tdwg_level": 3,
+          "species_count": 4781,
+          "links": {
+            "self": "/api/v1/distributions/nwy",
+            "plants": "/api/v1/distributions/nwy/plants",
+            "species": "/api/v1/distributions/nwy/species"
+          }
+        },
+        {
+          "id": 238,
+          "name": "North Carolina",
+          "slug": "nca",
+          "tdwg_code": "NCA",
+          "tdwg_level": 3,
+          "species_count": 4348,
+          "links": {
+            "self": "/api/v1/distributions/nca",
+            "plants": "/api/v1/distributions/nca/plants",
+            "species": "/api/v1/distributions/nca/species"
+          }
+        },
+        {
+          "id": 239,
+          "name": "Ohio",
+          "slug": "ohi",
+          "tdwg_code": "OHI",
+          "tdwg_level": 3,
+          "species_count": 3323,
+          "links": {
+            "self": "/api/v1/distributions/ohi",
+            "plants": "/api/v1/distributions/ohi/plants",
+            "species": "/api/v1/distributions/ohi/species"
+          }
+        },
+        {
+          "id": 225,
+          "name": "Oklahoma",
+          "slug": "okl",
+          "tdwg_code": "OKL",
+          "tdwg_level": 3,
+          "species_count": 3250,
+          "links": {
+            "self": "/api/v1/distributions/okl",
+            "plants": "/api/v1/distributions/okl/plants",
+            "species": "/api/v1/distributions/okl/species"
+          }
+        },
+        {
+          "id": 240,
+          "name": "Ontario",
+          "slug": "ont",
+          "tdwg_code": "ONT",
+          "tdwg_level": 3,
+          "species_count": 3714,
+          "links": {
+            "self": "/api/v1/distributions/ont",
+            "plants": "/api/v1/distributions/ont/plants",
+            "species": "/api/v1/distributions/ont/species"
+          }
+        },
+        {
+          "id": 241,
+          "name": "Pennsylvania",
+          "slug": "pen",
+          "tdwg_code": "PEN",
+          "tdwg_level": 3,
+          "species_count": 3840,
+          "links": {
+            "self": "/api/v1/distributions/pen",
+            "plants": "/api/v1/distributions/pen/plants",
+            "species": "/api/v1/distributions/pen/species"
+          }
+        },
+        {
+          "id": 192,
+          "name": "South Carolina",
+          "slug": "sca",
+          "tdwg_code": "SCA",
+          "tdwg_level": 3,
+          "species_count": 3793,
+          "links": {
+            "self": "/api/v1/distributions/sca",
+            "plants": "/api/v1/distributions/sca/plants",
+            "species": "/api/v1/distributions/sca/species"
+          }
+        },
+        {
+          "id": 149,
+          "name": "Tennessee",
+          "slug": "ten",
+          "tdwg_code": "TEN",
+          "tdwg_level": 3,
+          "species_count": 3656,
+          "links": {
+            "self": "/api/v1/distributions/ten",
+            "plants": "/api/v1/distributions/ten/plants",
+            "species": "/api/v1/distributions/ten/species"
+          }
+        },
+        {
+          "id": 168,
+          "name": "Texas",
+          "slug": "tex",
+          "tdwg_code": "TEX",
+          "tdwg_level": 3,
+          "species_count": 6763,
+          "links": {
+            "self": "/api/v1/distributions/tex",
+            "plants": "/api/v1/distributions/tex/plants",
+            "species": "/api/v1/distributions/tex/species"
+          }
+        },
+        {
+          "id": 224,
+          "name": "Virginia",
+          "slug": "vrg",
+          "tdwg_code": "VRG",
+          "tdwg_level": 3,
+          "species_count": 4010,
+          "links": {
+            "self": "/api/v1/distributions/vrg",
+            "plants": "/api/v1/distributions/vrg/plants",
+            "species": "/api/v1/distributions/vrg/species"
+          }
+        },
+        {
+          "id": 244,
+          "name": "West Virginia",
+          "slug": "wva",
+          "tdwg_code": "WVA",
+          "tdwg_level": 3,
+          "species_count": 2819,
+          "links": {
+            "self": "/api/v1/distributions/wva",
+            "plants": "/api/v1/distributions/wva/plants",
+            "species": "/api/v1/distributions/wva/species"
+          }
+        }
+      ],
+      "introduced": [
+        {
+          "id": 28,
+          "name": "India",
+          "slug": "ind",
+          "tdwg_code": "IND",
+          "tdwg_level": 3,
+          "species_count": 9569,
+          "links": {
+            "self": "/api/v1/distributions/ind",
+            "plants": "/api/v1/distributions/ind/plants",
+            "species": "/api/v1/distributions/ind/species"
+          }
+        }
+      ]
+    },
+    "duration": null,
+    "edible": false,
+    "edible_part": null,
+    "flower": {
+      "color": null,
+      "conspicuous": null
+    },
+    "foliage": {
+      "texture": null,
+      "color": null,
+      "leaf_retention": null
+    },
+    "fruit_or_seed": {
+      "conspicuous": null,
+      "color": null,
+      "shape": null,
+      "seed_persistence": null
+    },
+    "growth": {
+      "description": null,
+      "sowing": null,
+      "days_to_harvest": null,
+      "row_spacing": {
+        "cm": null
+      },
+      "spread": {
+        "cm": null
+      },
+      "ph_maximum": null,
+      "ph_minimum": null,
+      "light": null,
+      "atmospheric_humidity": null,
+      "growth_months": null,
+      "bloom_months": null,
+      "fruit_months": null,
+      "minimum_precipitation": {
+        "mm": null
+      },
+      "maximum_precipitation": {
+        "mm": null
+      },
+      "minimum_root_depth": {
+        "cm": null
+      },
+      "minimum_temperature": {
+        "deg_f": null,
+        "deg_c": null
+      },
+      "maximum_temperature": {
+        "deg_f": null,
+        "deg_c": null
+      },
+      "soil_nutriments": null,
+      "soil_salinity": null,
+      "soil_texture": null,
+      "soil_humidity": null
+    },
+    "images": [
+      {
+        "url": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/plants/botanic_photo/original/Vernonia_gigantea.jpg",
+        "tags": [
+          "main"
+        ],
+        "description": ""
+      },
+      {
+        "url": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/plants/botanic_photo/4x3/Vernonia_gigantea.jpg",
+        "tags": [
+          "thumbnail"
+        ],
+        "description": ""
+      },
+      {
+        "tags": [],
+        "description": "",
+        "quality": 3,
+        "original": false,
+        "_id": "667bba12fe8170201f205ded"
+      }
+    ],
+    "observations": "SE. Canada to U.S.A.",
+    "sources": [
+      {
+        "last_update": "2022-12-04T18:33:50.434Z",
+        "id": "wfo-0000000462",
+        "name": "WFO",
+        "url": null,
+        "citation": null
+      },
+      {
+        "last_update": "2022-12-04T18:33:50.471Z",
+        "id": "258416-1",
+        "name": "IPNI",
+        "url": null,
+        "citation": null
+      },
+      {
+        "last_update": "2022-12-04T19:53:54.709Z",
+        "id": "wfo-0000051948",
+        "name": "WFO",
+        "url": null,
+        "citation": null
+      },
+      {
+        "last_update": "2022-12-06T18:22:00.550Z",
+        "id": "7546818",
+        "name": "GBIF",
+        "url": "https://www.gbif.org/species/7546818",
+        "citation": null
+      },
+      {
+        "last_update": "2022-12-06T18:22:00.996Z",
+        "id": "urn:lsid:ipni.org:names:258416-1",
+        "name": "POWO",
+        "url": "http://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:258416-1",
+        "citation": "POWO (2019). Plants of the World Online. Facilitated by the Royal Botanic Gardens, Kew. Published on the Internet; http://www.plantsoftheworldonline.org/ Retrieved 2022-12-06"
+      },
+      {
+        "last_update": "2022-12-06T18:22:02.978Z",
+        "id": "Vernonia gigantea (Walter) Trel. ex Trel.",
+        "name": "PlantNet",
+        "url": "https://identify.plantnet.org/species/the-plant-list/Vernonia gigantea (Walter) Trel. ex Trel.",
+        "citation": null
+      },
+      {
+        "last_update": "2022-12-06T18:22:03.005Z",
+        "id": "5397391",
+        "name": "GBIF",
+        "url": "https://www.gbif.org/species/5397391",
+        "citation": null
+      }
+    ],
+    "specifications": {
+      "ligneous_type": null,
+      "growth_form": null,
+      "growth_habit": "Forb/herb",
+      "growth_rate": null,
+      "average_height": {
+        "cm": null
+      },
+      "maximum_height": {
+        "cm": null
+      },
+      "nitrogen_fixation": null,
+      "shape_and_orientation": null,
+      "toxicity": null
+    },
+    "vegetable": false,
+    "thumbnail": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/plants/botanic_photo/4x3/ironweed.jpg",
+    "color": {
+      "family": "#be4bdb"
+    },
+    "updatedAt": "2024-07-30 00:08:40.186000"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "unknown": {
+    "_id": "67df0bc915f68f96bb6f7ebe",
+    "locationName": "Wildmile-WMDIS_A",
+    "zone": "WMDIS",
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        -87.65232,
+        41.90668
+      ],
+      "_id": "67df0c9c1c7716da6bab6847"
+    },
+    "tags": [
+      "AFW"
+    ],
+    "mount": "",
+    "favorite": false,
+    "notes": "WildMile Disconnected floating island on west-bank of river (east coast of Goose Island)",
+    "retired": false,
+    "creator": "65da43e98966266b5eb496c3",
+    "createdAt": "2025-03-22 19:13:13.503000",
+    "updatedAt": "2025-03-22 19:16:44.324000",
+    "__v": 0,
+    "projectArea": "Wildmile"
+  }
+}

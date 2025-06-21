@@ -1,0 +1,32 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "deleted": [
+    "bool"
+  ],
+  "name": [
+    "str"
+  ],
+  "material": [
+    "str"
+  ],
+  "catagory": [
+    "str"
+  ],
+  "description": [
+    "str"
+  ],
+  "creator": [
+    "ObjectId"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "updatedAt": [
+    "datetime"
+  ],
+  "__v": [
+    "int"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "tokens": {
+    "type": "list",
+    "items": {}
+  },
+  "email": [
+    "str"
+  ],
+  "password": [
+    "str"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "updatedAt": [
+    "datetime"
+  ],
+  "__v": [
+    "int"
+  ],
+  "profile": {
+    "gender": [
+      "str"
+    ],
+    "location": [
+      "str"
+    ],
+    "name": [
+      "str"
+    ],
+    "website": [
+      "str"
+    ],
+    "picture": [
+      "bytes"
+    ]
+  },
+  "roles": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "str"
+    ]
+  },
+  "admin": [
+    "bool"
+  ],
+  "passwordResetExpires": [
+    "NoneType",
+    "datetime"
+  ],
+  "passwordResetToken": [
+    "NoneType",
+    "str"
+  ],
+  "projects": {
+    "type": "list",
+    "items": {}
+  },
+  "ranger": [
+    "bool"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "unknown": {
+    "_id": "67ba2492ef844d739e65af7d",
+    "user": "674e9e1be3d18d729aa8fce2",
+    "level": 4,
+    "totalPoints": 1730,
+    "domainRanks": {
+      "CAMERATRAP": {
+        "currentRank": "679c07830927e747623512ee",
+        "points": 1730,
+        "_id": "67ba2492ef844d739e65af85"
+      }
+    },
+    "stats": {
+      "imagesReviewed": 7410,
+      "animalsObserved": 3425,
+      "uniqueSpecies": 34,
+      "consecutiveDays": 0,
+      "blanksLogged": 6150,
+      "deploymentsReviewed": 0,
+      "speciesConsensus": 0,
+      "expertVerified": 0,
+      "itemsLogged": 0,
+      "uniqueMaterials": 0,
+      "cleanupEvents": 0,
+      "weightCollected": 0,
+      "locationsMonitored": 0,
+      "dataQualityScore": 0,
+      "samplesCollected": 0,
+      "parametersMeasured": 0,
+      "sitesMonitored": 0,
+      "qualityChecksPassed": 0,
+      "consecutiveSampling": 0
+    },
+    "streaks": {
+      "current": 1,
+      "longest": 0,
+      "lastLoginDate": "2025-05-17 00:00:00"
+    },
+    "achievements": [
+      {
+        "achievement": "679714d7fb7517403711fd85",
+        "earnedAt": "2025-02-22 19:25:06.092000",
+        "progress": 100,
+        "_id": "67ba2492ef844d739e65af87"
+      },
+      {
+        "achievement": "6797185f1e9ce1779232c943",
+        "earnedAt": "2025-02-22 21:07:45.585000",
+        "progress": 100,
+        "_id": "67ba3ca15bb46a72acceb716"
+      },
+      {
+        "achievement": "679c07e7b41d8ce3be3b60bf",
+        "earnedAt": "2025-02-22 21:07:45.587000",
+        "progress": 100,
+        "_id": "67ba3ca15bb46a72acceb718"
+      },
+      {
+        "achievement": "679c07830927e747623512ee",
+        "earnedAt": "2025-03-29 19:23:04.254000",
+        "progress": 100,
+        "_id": "67e84898e3c57f9797bfbabb"
+      },
+      {
+        "achievement": "67f186860fe8cfe6859dc435",
+        "earnedAt": "2025-04-12 18:30:57.020000",
+        "progress": 100,
+        "_id": "67fab1618f1de5052e4c3ed6"
+      },
+      {
+        "achievement": "67f189dd003687a3ef30b35d",
+        "earnedAt": "2025-04-12 18:30:57.022000",
+        "progress": 100,
+        "_id": "67fab1618f1de5052e4c3ed7"
+      },
+      {
+        "achievement": "67f18a09003687a3ef30b3fe",
+        "earnedAt": "2025-04-12 18:30:57.023000",
+        "progress": 100,
+        "_id": "67fab1618f1de5052e4c3ed8"
+      },
+      {
+        "achievement": "67f18a32e6498820c28026d0",
+        "earnedAt": "2025-04-12 18:30:57.024000",
+        "progress": 100,
+        "_id": "67fab1618f1de5052e4c3ed9"
+      },
+      {
+        "achievement": "67f1819f0fe8cfe6859dc3df",
+        "earnedAt": null,
+        "progress": 82,
+        "_id": "6828dc1f57a3124ee9429f25"
+      },
+      {
+        "achievement": "67f184860fe8cfe6859dc421",
+        "earnedAt": null,
+        "progress": 49,
+        "_id": "6828dc1f57a3124ee9429f26"
+      }
+    ],
+    "createdAt": "2025-02-22 19:25:06.105000",
+    "updatedAt": "2025-05-17 18:57:35.638000",
+    "__v": 87
+  }
+}

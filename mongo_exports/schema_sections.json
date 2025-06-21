@@ -1,0 +1,45 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "name": [
+    "str"
+  ],
+  "description": [
+    "str"
+  ],
+  "dateInstalled": "datetime",
+  "projectId": [
+    "ObjectId"
+  ],
+  "__v": [
+    "int"
+  ],
+  "size": {
+    "width": [
+      "int"
+    ],
+    "length": [
+      "int"
+    ]
+  },
+  "installed": [
+    "bool"
+  ],
+  "decommisioned": [
+    "bool"
+  ],
+  "authorizedUsers": {
+    "type": "list",
+    "items": {}
+  },
+  "deleted": [
+    "bool"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "updatedAt": [
+    "datetime"
+  ]
+}

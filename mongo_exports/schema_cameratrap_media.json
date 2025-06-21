@@ -1,0 +1,34 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "mediaID": [
+    "str"
+  ],
+  "timestamp": [
+    "datetime"
+  ],
+  "publicURL": [
+    "str"
+  ],
+  "relativePath": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "str"
+    ]
+  },
+  "filePath": [
+    "str"
+  ],
+  "filePublic": [
+    "bool"
+  ],
+  "fileName": [
+    "str"
+  ],
+  "fileMediatype": [
+    "str"
+  ],
+  "exifData": {}
+}

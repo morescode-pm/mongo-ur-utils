@@ -1,0 +1,60 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "locationName": [
+    "str"
+  ],
+  "tags": {
+    "type": "list",
+    "items": {},
+    "item_type": [
+      "str"
+    ]
+  },
+  "mount": [
+    "str"
+  ],
+  "favorite": [
+    "bool"
+  ],
+  "notes": [
+    "str"
+  ],
+  "retired": [
+    "bool"
+  ],
+  "creator": [
+    "ObjectId"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "updatedAt": [
+    "datetime"
+  ],
+  "__v": [
+    "int"
+  ],
+  "zone": [
+    "str"
+  ],
+  "location": {
+    "type": [
+      "str"
+    ],
+    "coordinates": {
+      "type": "list",
+      "items": {},
+      "item_type": [
+        "float"
+      ]
+    },
+    "_id": [
+      "ObjectId"
+    ]
+  },
+  "projectArea": [
+    "str"
+  ]
+}

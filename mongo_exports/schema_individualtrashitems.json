@@ -1,0 +1,33 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "tags": {
+    "type": "list",
+    "items": {}
+  },
+  "deleted": [
+    "bool"
+  ],
+  "itemId": [
+    "ObjectId"
+  ],
+  "logId": [
+    "ObjectId"
+  ],
+  "creator": [
+    "ObjectId"
+  ],
+  "__v": [
+    "int"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "updatedAt": [
+    "datetime"
+  ],
+  "quantity": [
+    "int"
+  ]
+}

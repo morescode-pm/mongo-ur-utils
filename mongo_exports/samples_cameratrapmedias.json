@@ -1,0 +1,119 @@
+{
+  "unknown": {
+    "_id": "671b1881c97e2c0a895a1894",
+    "mediaID": "7e6664df5c1994901b08cd04e26aac67",
+    "imageHash": "43f45b12d4ddf48617ba665d83549a6e",
+    "timestamp": "2024-01-12 06:03:50",
+    "publicURL": "https://urbanriverrangers.s3.amazonaws.com/images/2024/2024-02-01_16-41-42/DCIM/100SYCAM/SYEW0785.JPG",
+    "relativePath": [
+      "2024",
+      "2024-02-01_16-41-42",
+      "DCIM",
+      "100SYCAM",
+      "SYEW0785.JPG"
+    ],
+    "filePath": "images/2024/2024-02-01_16-41-42/DCIM/100SYCAM/SYEW0785.JPG",
+    "filePublic": true,
+    "fileName": "SYEW0785.JPG",
+    "fileMediatype": "image/jpeg",
+    "exifData": {
+      "GPSInfo": {
+        "GPSLatitudeRef": "N",
+        "GPSLatitude": [
+          41.84797,
+          0.0,
+          5.013251324188549e-10,
+          1.0000000020053006,
+          0.0,
+          1.5,
+          1.0232512271227784e-09,
+          1.023252709737919e-09
+        ],
+        "GPSLongitudeRef": "W",
+        "GPSLongitude": [
+          87.65017,
+          0.0,
+          0.9999998772098452,
+          0.9999999549769469,
+          0.034482758620689655,
+          5.013251324188549e-10,
+          1.0000000020053006,
+          0.0
+        ]
+      },
+      "Make": "TC\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "Model": "REVEAL_SK\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "Software": "R4.0",
+      "DateTime": "2024-01-12 06:03:50",
+      "DateTimeOriginal": "2024-01-12 06:03:50",
+      "FocalLength": 0.0,
+      "ExposureTime": 0.06666666666666667,
+      "FNumber": 2.8,
+      "ISOSpeedRatings": 200,
+      "location": [
+        -87.65017,
+        41.84797
+      ]
+    },
+    "exifExtracted": true,
+    "createdAt": "2024-10-24 23:03:13.917000",
+    "fileLocations": [
+      {
+        "publicURL": "https://urbanriverrangers.s3.amazonaws.com/images/2024/2024-02-01_16-41-42/DCIM/100SYCAM/SYEW0785.JPG",
+        "relativePath": [
+          "2024",
+          "2024-02-01_16-41-42",
+          "DCIM",
+          "100SYCAM",
+          "SYEW0785.JPG"
+        ],
+        "filePath": "images/2024/2024-02-01_16-41-42/DCIM/100SYCAM/SYEW0785.JPG",
+        "filePublic": true,
+        "fileName": "SYEW0785.JPG",
+        "createdAt": "2024-10-24 23:03:13.917000"
+      }
+    ],
+    "__v": 2,
+    "accepted": false,
+    "consensusStatus": "Pending",
+    "favorite": false,
+    "favoriteCount": 0,
+    "favorites": [],
+    "flagged": false,
+    "lastObservation": "2025-04-03 20:59:38.426000",
+    "mediaComments": [],
+    "needsReview": false,
+    "observations": [
+      "674f88093422cb9ceed235fb",
+      "67eef6bae3d9efa333948b63"
+    ],
+    "removed": false,
+    "reviewCount": 2,
+    "reviewed": false,
+    "reviewers": [
+      "674df1369fe6e936e33e444e",
+      "67e33e8c92c6e0b6e3e023e7"
+    ],
+    "speciesConsensus": [
+      {
+        "observationType": "blank",
+        "scientificName": null,
+        "taxonID": null,
+        "count": 1,
+        "accepted": false,
+        "observationCount": 2,
+        "_id": "67eef6bae3d9efa333948b69"
+      }
+    ],
+    "updatedAt": "2025-04-03 20:59:38.427000",
+    "aiResults": [
+      {
+        "modelName": "speciesnet/PyTorch/v4.0.1a",
+        "runDate": "2025-05-24",
+        "confBlank": 1.0,
+        "confHuman": 0.0,
+        "confAnimal": 0.0
+      }
+    ]
+  }
+}

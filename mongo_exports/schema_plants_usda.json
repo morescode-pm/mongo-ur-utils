@@ -1,0 +1,567 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "Id": [
+    "int"
+  ],
+  "Symbol": [
+    "str"
+  ],
+  "ScientificName": [
+    "str"
+  ],
+  "ScientificNameComponents": [
+    "NoneType"
+  ],
+  "CommonName": [
+    "str"
+  ],
+  "Group": [
+    "NoneType"
+  ],
+  "RankId": [
+    "int"
+  ],
+  "Rank": [
+    "NoneType"
+  ],
+  "Durations": [
+    "NoneType"
+  ],
+  "GrowthHabits": [
+    "NoneType"
+  ],
+  "NativeStatuses": [
+    "NoneType"
+  ],
+  "MapCoordinates": [
+    "NoneType"
+  ],
+  "PlantsDistributionResults": [
+    "NoneType"
+  ],
+  "AcceptedId": [
+    "int"
+  ],
+  "OtherCommonNames": [
+    "NoneType"
+  ],
+  "HasSynonyms": [
+    "bool"
+  ],
+  "Synonyms": {
+    "type": "list",
+    "items": {
+      "Id": [
+        "int"
+      ],
+      "Symbol": [
+        "str"
+      ],
+      "ScientificName": [
+        "str"
+      ],
+      "ScientificNameComponents": [
+        "NoneType"
+      ],
+      "CommonName": [
+        "NoneType"
+      ],
+      "Group": [
+        "NoneType"
+      ],
+      "RankId": [
+        "int"
+      ],
+      "Rank": [
+        "NoneType"
+      ],
+      "Durations": [
+        "NoneType"
+      ],
+      "GrowthHabits": [
+        "NoneType"
+      ],
+      "NativeStatuses": [
+        "NoneType"
+      ],
+      "MapCoordinates": [
+        "NoneType"
+      ],
+      "PlantsDistributionResults": [
+        "NoneType"
+      ],
+      "AcceptedId": [
+        "int"
+      ],
+      "OtherCommonNames": [
+        "NoneType"
+      ],
+      "HasSynonyms": [
+        "bool"
+      ],
+      "Synonyms": [
+        "NoneType"
+      ],
+      "Ancestors": [
+        "NoneType"
+      ],
+      "HasSubordinateTaxa": [
+        "bool"
+      ],
+      "SubordinateTaxa": [
+        "NoneType"
+      ],
+      "HasWildlife": [
+        "bool"
+      ],
+      "Wildlife": [
+        "NoneType"
+      ],
+      "HasWetlandData": [
+        "bool"
+      ],
+      "WetlandData": [
+        "NoneType"
+      ],
+      "HasImages": [
+        "bool"
+      ],
+      "HasRelatedLinks": [
+        "bool"
+      ],
+      "RelatedLinks": [
+        "NoneType"
+      ],
+      "HasLegalStatuses": [
+        "bool"
+      ],
+      "LegalStatuses": [
+        "NoneType"
+      ],
+      "HasNoxiousStatuses": [
+        "bool"
+      ],
+      "NoxiousStatuses": [
+        "NoneType"
+      ],
+      "HasDocumentation": [
+        "bool"
+      ],
+      "HasDistributionData": [
+        "bool"
+      ],
+      "Documentation": [
+        "NoneType"
+      ],
+      "PlantNotes": [
+        "NoneType"
+      ],
+      "NumImages": [
+        "int"
+      ],
+      "ProfileImageFilename": [
+        "NoneType"
+      ],
+      "ImageId": [
+        "int"
+      ],
+      "HasInvasiveStatuses": [
+        "bool"
+      ],
+      "InvasiveStatuses": [
+        "NoneType"
+      ],
+      "ProtectedStatuses": [
+        "NoneType"
+      ],
+      "PlantGuideUrls": [
+        "NoneType"
+      ],
+      "FactSheetUrls": [
+        "NoneType"
+      ],
+      "HasCharacteristics": [
+        "bool"
+      ],
+      "PlantLocationId": [
+        "int"
+      ],
+      "Characteristics": [
+        "NoneType"
+      ],
+      "HasEthnobotany": [
+        "bool"
+      ],
+      "Ethnobotanies": [
+        "NoneType"
+      ],
+      "HasPollinator": [
+        "bool"
+      ],
+      "Pollinators": [
+        "NoneType"
+      ],
+      "ScientificSort": [
+        "NoneType"
+      ]
+    }
+  },
+  "Ancestors": [
+    "NoneType"
+  ],
+  "HasSubordinateTaxa": [
+    "bool"
+  ],
+  "SubordinateTaxa": [
+    "NoneType"
+  ],
+  "HasWildlife": [
+    "bool"
+  ],
+  "Wildlife": [
+    "NoneType"
+  ],
+  "HasWetlandData": [
+    "bool"
+  ],
+  "WetlandData": [
+    "NoneType"
+  ],
+  "HasImages": [
+    "bool"
+  ],
+  "HasRelatedLinks": [
+    "bool"
+  ],
+  "RelatedLinks": [
+    "NoneType"
+  ],
+  "HasLegalStatuses": [
+    "bool"
+  ],
+  "LegalStatuses": [
+    "NoneType"
+  ],
+  "HasNoxiousStatuses": [
+    "bool"
+  ],
+  "NoxiousStatuses": [
+    "NoneType"
+  ],
+  "HasDocumentation": [
+    "bool"
+  ],
+  "HasDistributionData": [
+    "bool"
+  ],
+  "Documentation": [
+    "NoneType"
+  ],
+  "PlantNotes": [
+    "NoneType"
+  ],
+  "NumImages": [
+    "int"
+  ],
+  "ProfileImageFilename": [
+    "NoneType",
+    "str"
+  ],
+  "ImageId": [
+    "int"
+  ],
+  "HasInvasiveStatuses": [
+    "bool"
+  ],
+  "InvasiveStatuses": [
+    "NoneType"
+  ],
+  "ProtectedStatuses": [
+    "NoneType"
+  ],
+  "PlantGuideUrls": [
+    "NoneType"
+  ],
+  "FactSheetUrls": [
+    "NoneType"
+  ],
+  "HasCharacteristics": [
+    "bool"
+  ],
+  "PlantLocationId": [
+    "int"
+  ],
+  "Characteristics": [
+    "NoneType"
+  ],
+  "HasEthnobotany": [
+    "bool"
+  ],
+  "Ethnobotanies": [
+    "NoneType"
+  ],
+  "HasPollinator": [
+    "bool"
+  ],
+  "Pollinators": [
+    "NoneType"
+  ],
+  "ScientificSort": [
+    "str"
+  ],
+  "characteristics": {
+    "type": "list",
+    "items": {},
+    "Active Growth Period": [
+      "str"
+    ],
+    "Bloat": [
+      "str"
+    ],
+    "C:N Ratio": [
+      "str"
+    ],
+    "Coppice Potential": [
+      "str"
+    ],
+    "Fall Conspicuous": [
+      "str"
+    ],
+    "Fire Resistant": [
+      "str"
+    ],
+    "Flower Color": [
+      "str"
+    ],
+    "Flower Conspicuous": [
+      "str"
+    ],
+    "Foliage Color": [
+      "str"
+    ],
+    "Foliage Porosity Summer": [
+      "str"
+    ],
+    "Foliage Porosity Winter": [
+      "str"
+    ],
+    "Foliage Texture": [
+      "str"
+    ],
+    "Fruit/Seed Color": [
+      "str"
+    ],
+    "Fruit/Seed Conspicuous": [
+      "str"
+    ],
+    "Growth Form": [
+      "str"
+    ],
+    "Growth Rate": [
+      "str"
+    ],
+    "Height at 20 Years, Maximum (feet)": [
+      "str"
+    ],
+    "Height, Mature (feet)": [
+      "str"
+    ],
+    "Known Allelopath": [
+      "str"
+    ],
+    "Leaf Retention": [
+      "str"
+    ],
+    "Lifespan": [
+      "str"
+    ],
+    "Low Growing Grass": [
+      "str"
+    ],
+    "Nitrogen Fixation": [
+      "str"
+    ],
+    "Resprout Ability": [
+      "str"
+    ],
+    "Shape and Orientation": [
+      "str"
+    ],
+    "Toxicity": [
+      "str"
+    ],
+    "Adapted to Coarse Textured Soils": [
+      "str"
+    ],
+    "Adapted to Fine Textured Soils": [
+      "str"
+    ],
+    "Adapted to Medium Textured Soils": [
+      "str"
+    ],
+    "Anaerobic Tolerance": [
+      "str"
+    ],
+    "CaCO3 Tolerance": [
+      "str"
+    ],
+    "Cold Stratification Required": [
+      "str"
+    ],
+    "Drought Tolerance": [
+      "str"
+    ],
+    "Fertility Requirement": [
+      "str"
+    ],
+    "Fire Tolerance": [
+      "str"
+    ],
+    "Frost Free Days, Minimum": [
+      "str"
+    ],
+    "Hedge Tolerance": [
+      "str"
+    ],
+    "Moisture Use": [
+      "str"
+    ],
+    "pH, Maximum": [
+      "str"
+    ],
+    "pH, Minimum": [
+      "str"
+    ],
+    "Planting Density per Acre, Maximum": [
+      "str"
+    ],
+    "Planting Density per Acre, Minimum": [
+      "str"
+    ],
+    "Precipitation, Maximum": [
+      "str"
+    ],
+    "Precipitation, Minimum": [
+      "str"
+    ],
+    "Root Depth, Minimum (inches)": [
+      "str"
+    ],
+    "Salinity Tolerance": [
+      "str"
+    ],
+    "Shade Tolerance": [
+      "str"
+    ],
+    "Temperature, Minimum (\u00b0F)": [
+      "str"
+    ],
+    "Bloom Period": [
+      "str"
+    ],
+    "Commercial Availability": [
+      "str"
+    ],
+    "Fruit/Seed Abundance": [
+      "str"
+    ],
+    "Fruit/Seed Period Begin": [
+      "str"
+    ],
+    "Fruit/Seed Period End": [
+      "str"
+    ],
+    "Fruit/Seed Persistence": [
+      "str"
+    ],
+    "Propagated by Bare Root": [
+      "str"
+    ],
+    "Propagated by Bulb": [
+      "str"
+    ],
+    "Propagated by Container": [
+      "str"
+    ],
+    "Propagated by Corm": [
+      "str"
+    ],
+    "Propagated by Cuttings": [
+      "str"
+    ],
+    "Propagated by Seed": [
+      "str"
+    ],
+    "Propagated by Sod": [
+      "str"
+    ],
+    "Propagated by Sprigs": [
+      "str"
+    ],
+    "Propagated by Tubers": [
+      "str"
+    ],
+    "Seed per Pound": [
+      "str"
+    ],
+    "Seed Spread Rate": [
+      "str"
+    ],
+    "Seedling Vigor": [
+      "str"
+    ],
+    "Small Grain": [
+      "str"
+    ],
+    "Vegetative Spread Rate": [
+      "str"
+    ],
+    "Berry/Nut/Seed Product": [
+      "str"
+    ],
+    "Christmas Tree Product": [
+      "str"
+    ],
+    "Fodder Product": [
+      "str"
+    ],
+    "Fuelwood Product": [
+      "str"
+    ],
+    "Lumber Product": [
+      "str"
+    ],
+    "Naval Store Product": [
+      "str"
+    ],
+    "Nursery Stock Product": [
+      "str"
+    ],
+    "Palatable Browse Animal": [
+      "str"
+    ],
+    "Palatable Human": [
+      "str"
+    ],
+    "Post Product": [
+      "str"
+    ],
+    "Pulpwood Product": [
+      "str"
+    ],
+    "Veneer Product": [
+      "str"
+    ],
+    "Protein Potential": [
+      "str"
+    ],
+    "Palatable Graze Animal": [
+      "str"
+    ],
+    "After Harvest Regrowth Rate": [
+      "str"
+    ]
+  }
+}

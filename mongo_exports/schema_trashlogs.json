@@ -1,0 +1,57 @@
+{
+  "_id": [
+    "ObjectId"
+  ],
+  "participants": {
+    "type": "list",
+    "items": {}
+  },
+  "deleted": [
+    "bool"
+  ],
+  "site": [
+    "str"
+  ],
+  "timeStart": [
+    "datetime"
+  ],
+  "timeEnd": [
+    "datetime"
+  ],
+  "creator": [
+    "ObjectId"
+  ],
+  "unattributed": [
+    "bool"
+  ],
+  "numOfParticipants": [
+    "int",
+    "NoneType"
+  ],
+  "notes": [
+    "str"
+  ],
+  "createdAt": [
+    "datetime"
+  ],
+  "updatedAt": [
+    "datetime"
+  ],
+  "__v": [
+    "int"
+  ],
+  "trashiness": [
+    "int",
+    "NoneType"
+  ],
+  "temp": [
+    "int",
+    "NoneType"
+  ],
+  "wind": [
+    "int"
+  ],
+  "cloud": [
+    "int"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "unknown": {
+    "_id": "671d6a846e32d96acf60dbcf",
+    "mediaId": "bdec0b4480a54bdfe66d227b9365a7fa",
+    "mediaInfo": {
+      "md5": "bdec0b4480a54bdfe66d227b9365a7fa",
+      "imageHash": "9eef9fc018ca6dd73583b6c3de5c9f80"
+    },
+    "eventStart": "2024-06-06 13:08:31",
+    "eventEnd": "2024-06-06 13:08:31",
+    "observationLevel": "media",
+    "observationType": "animal",
+    "taxonId": "51271",
+    "scientificName": "Trachemys scripta elegans",
+    "count": 1,
+    "creator": "65da43e98966266b5eb496c3",
+    "__v": 0,
+    "createdAt": "2024-10-26 22:17:40.933000",
+    "updatedAt": "2024-10-26 22:17:40.933000"
+  }
+}
