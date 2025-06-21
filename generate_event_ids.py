@@ -5,21 +5,19 @@ from datetime import timedelta
 import os # Added import
 import hashlib # For deterministic IDs
 
-def generate_event_ids(input_file_path, output_file_path_detailed, output_file_path_summary, time_threshold_seconds):
+def generate_event_ids(input_file_path, time_threshold_seconds):
     """
     Generates eventIDs for observations based on species and time proximity.
 
     Args:
         input_file_path (str): Path to the input CSV file (observations).
-        output_file_path_detailed (str): Path to save the detailed output CSV with eventIDs.
-        output_file_path_summary (str): Path to save the summary output CSV (optional).
         time_threshold_seconds (int): Time threshold in seconds to group observations.
     """
     print(f"Starting event ID generation for input file: {input_file_path}")
 
     # Load the observations CSV
     try:
-        df = pd.read_csv(input_file_path, low_memory=False)
+        df = pd.read_csv(input_file_path)
     except FileNotFoundError:
         print(f"Error: Input file not found at {input_file_path}")
         return
@@ -75,7 +73,7 @@ def generate_event_ids(input_file_path, output_file_path_detailed, output_file_p
         # If no eligible events, save the original DataFrame (all rows, eventID column is None)
         # This effectively means overwriting the input file with itself but with an eventID column.
         try:
-            df.to_csv(output_file_path_detailed, index=False)
+            df.to_csv(input_file_path, index=False)
         except Exception as e:
             print(f"Error saving output file when no eligible observations: {e}")
         return
@@ -147,7 +145,7 @@ def generate_event_ids(input_file_path, output_file_path_detailed, output_file_p
 
     # --- Save Output ---
     try:
-        df.to_csv(output_file_path_detailed, index=False)
+        df.to_csv(input_file_path, index=False)
     except Exception as e:
         print(f"Error saving output file: {e}")
 
@@ -168,7 +166,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     generate_event_ids(args.input_file,
-                         args.input_file,  # Output detailed path is same as input
-                         None,             # No summary output
                          args.threshold)
     print(f"Event ID generation complete for {args.input_file}.")
