@@ -113,7 +113,7 @@ def convert_deploymentlocations_to_camtrapdp(mongo_deployment_locations, dp_head
         deployments_data.append(deployment_entry)
     return deployments_data
 
-def convert_cameratrapmedias_to_camtrapdp(mongo_media_list, dp_headers, default_deployment_id="unknown_deployment_1"):
+def convert_cameratrapmedias_to_camtrapdp(mongo_media_list, dp_headers):
     """
     Converts MongoDB cameratrapmedias data to Camtrap DP media format.
     """
@@ -127,11 +127,8 @@ def convert_cameratrapmedias_to_camtrapdp(mongo_media_list, dp_headers, default_
 
         media_entry["mediaID"] = media_item.get("mediaID")
 
-        # deploymentID is a major challenge as it's not in samples_cameratrapmedias.json
-        # Using a default or passed-in ID. This is a significant simplification.
-        # A more robust solution would require linking media to deployments through other means
-        # or having this info in the source data.
-        media_entry["deploymentID"] = media_item.get("deploymentID", default_deployment_id) # Placeholder
+        # Use deploymentId from the database, leave empty if not present
+        media_entry["deploymentID"] = media_item.get("deploymentId", "")
 
         media_entry["timestamp"] = format_datetime_iso(media_item.get("timestamp"))
 
@@ -165,7 +162,7 @@ def convert_cameratrapmedias_to_camtrapdp(mongo_media_list, dp_headers, default_
         media_output_data.append(media_entry)
     return media_output_data
 
-def convert_observations_to_camtrapdp(mongo_observations_list, dp_headers, media_to_deployment_map=None, default_deployment_id="unknown_deployment_1"):
+def convert_observations_to_camtrapdp(mongo_observations_list, dp_headers, media_to_deployment_map=None):
     """
     Converts MongoDB observations data to Camtrap DP observations format.
     """
@@ -185,9 +182,8 @@ def convert_observations_to_camtrapdp(mongo_observations_list, dp_headers, media
         mongo_media_id = obs_item.get("mediaId") # Note: 'mediaId' (lowercase d) in source
         observation_entry["mediaID"] = mongo_media_id
 
-        # Attempt to get deploymentID from the media_to_deployment_map
-        # If not found, use the default_deployment_id
-        observation_entry["deploymentID"] = media_to_deployment_map.get(mongo_media_id, default_deployment_id)
+        # Get deploymentID from the media_to_deployment_map if available, otherwise leave empty
+        observation_entry["deploymentID"] = media_to_deployment_map.get(mongo_media_id, "")
 
         observation_entry["eventStart"] = format_datetime_iso(obs_item.get("eventStart"))
         observation_entry["eventEnd"] = format_datetime_iso(obs_item.get("eventEnd"))
@@ -304,25 +300,14 @@ def main_processing(mode):
         deployments_headers
     )
 
-    # Determine a fallback_deployment_id.
-    # If deployments were successfully converted, use the ID of the first one.
-    # Otherwise, use a generic placeholder.
-    # This is crucial because the media sample data does not link to deployments.
-    fallback_deployment_id = "unknown_deployment_1" # Default if no deployments processed
-    if deployments_camtrapdp and isinstance(deployments_camtrapdp, list) and len(deployments_camtrapdp) > 0:
-        first_deployment = deployments_camtrapdp[0]
-        if isinstance(first_deployment, dict) and "deploymentID" in first_deployment:
-            fallback_deployment_id = first_deployment.get("deploymentID", "unknown_deployment_1")
-
-
+    # Convert media data
     media_camtrapdp = convert_cameratrapmedias_to_camtrapdp(
         actual_media_data,
-        media_headers,
-        default_deployment_id=fallback_deployment_id
+        media_headers
     )
 
-    # Populate media_to_deployment_id_map based on the converted media data.
-    # This map is essential for linking observations to their respective deployments via media.
+    # Populate media_to_deployment_id_map based on the converted media data
+    # This map is used to link observations to their respective deployments via media
     media_to_deployment_id_map = {}
     if media_camtrapdp and isinstance(media_camtrapdp, list):
         for m_row in media_camtrapdp:
@@ -332,8 +317,7 @@ def main_processing(mode):
     observations_camtrapdp = convert_observations_to_camtrapdp(
         actual_observations_data,
         observations_headers,
-        media_to_deployment_map=media_to_deployment_id_map,
-        default_deployment_id=fallback_deployment_id # Pass fallback here too for observations whose media might not be in media_camtrapdp
+        media_to_deployment_map=media_to_deployment_id_map
     )
 
 
