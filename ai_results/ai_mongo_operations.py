@@ -51,10 +51,10 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
         print(f'Starting {operation} Operation\n')
         for media_id, data in results.items():
             item_count +=1
-            if operation == "update":
+            if operation == "append":
                 op = UpdateOne(
                     {"mediaID": media_id},
-                    {"$push": {"aiResults": {"$each": data["aiResults"]}}},
+                    {"$addToSet": {"aiResults": {"$each": data["aiResults"]}}},
                     upsert=True,
                 )
             elif operation == "replace":
@@ -123,12 +123,12 @@ def main():
 
     # Ask for operation type
     print("\nAvailable operations:")
-    print("1. update - Add new AI results to existing documents")
+    print("1. append - Add new AI results to existing documents if they don't exist")
     print("2. replace - Replace existing AI results")
     
-    operation = input("\nSelect operation type (update/replace): ").lower()
-    if operation not in ["update", "replace"]:
-        print("Invalid operation type. Please choose 'update', or 'replace'.")
+    operation = input("\nSelect operation type (append/replace): ").lower()
+    if operation not in ["append", "replace"]:
+        print("Invalid operation type. Please choose 'append', or 'replace'.")
         return
 
     # Process the records
