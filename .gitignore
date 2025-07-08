@@ -47,3 +47,6 @@ ai_results/*.json
 /mongo_exports/*.zip
 
 *.zip
+temp_tools/ur-speciesnet-persistent/output/predictions_dict_master.json
+temp_tools/ur-speciesnet-persistent/ur_test_medias_prod.csv
+temp_tools/ur-speciesnet-persistent/ur_test_medias_prod_filtered.csv
