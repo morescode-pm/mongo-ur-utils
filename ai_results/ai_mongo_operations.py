@@ -39,6 +39,7 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
     errors = 0
     total = 0
 
+
     try:
         # Load the JSON file
         with open(json_file, "r") as f:
@@ -47,25 +48,83 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
         total = len(results)
         item_count = 0
 
-        # Process each record
-        print(f'Starting {operation} Operation\n')
-        for media_id, data in results.items():
-            item_count +=1
-            if operation == "append":
+        media_ids = list(results.keys())
+        print(f"\nTotal mediaIDs in {json_file}: {len(media_ids)}")
+
+        if operation == "append":
+            # Step 1: Query DB for all mediaIDs in the file
+            print(f"\nStarting Append Operations...\n")
+            db_docs = collection.find({"mediaID": {"$in": media_ids}}, {"mediaID": 1, "aiResults": 1})
+            db_map = {doc["mediaID"]: doc for doc in db_docs}
+
+            not_found = []
+            already_has_airesults = []
+            to_update = []
+
+            for media_id in media_ids:
+                doc = db_map.get(media_id)
+                if not doc:
+                    not_found.append(media_id)
+                elif "aiResults" in doc:
+                    already_has_airesults.append(media_id)
+                else:
+                    to_update.append(media_id)
+
+            # Print stats before proceeding
+            print(f"\nAppend operation pre-check:")
+            print(f"MediaIDs not found in DB: {len(not_found)}")
+            print(f"MediaIDs already with aiResults: {len(already_has_airesults)}")
+            print(f"MediaIDs to be updated (no aiResults): {len(to_update)}")
+
+            if not to_update:
+                print("No records to update. Exiting.")
+                return
+
+            # Only process those to be updated
+            print(f"\nStarting append Operation for {len(to_update)} records\n")
+            for media_id in to_update:
+                data = results[media_id]
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$addToSet": {"aiResults": {"$each": data["aiResults"]}}},
                     upsert=False,
                 )
-            elif operation == "replace":
-                # Standardizing to mediaID as discussed in the problem description
+                operations.append(op)
+                item_count += 1
+
+                if len(operations) == BATCH_SIZE or item_count == len(to_update):
+                    try:
+                        if operations:
+                            bulk_result = collection.bulk_write(operations)
+                            processed += bulk_result.matched_count + bulk_result.upserted_count
+                            print(f"Processed batch of {len(operations)}. Total processed: {processed}/{len(to_update)}")
+                            operations = []
+                    except BulkWriteError as bwe:
+                        print(f"Bulk write error: {bwe.details}")
+                        errors += len(bwe.details.get('writeErrors', []))
+                    except Exception as e:
+                        print(f"Error during bulk write: {str(e)}")
+                        errors += len(operations)
+                        operations = []
+
+            print(f"\nAppend operation complete:")
+            print(f"Records not found in DB: {len(not_found)}")
+            print(f"Records already with aiResults: {len(already_has_airesults)}")
+            print(f"Records updated: {processed}")
+            print(f"Errors: {errors}")
+            return
+
+        # ...existing code for replace operation...
+        print(f'Starting {operation} Operation\n')
+        for media_id, data in results.items():
+            item_count +=1
+            if operation == "replace":
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$set": {"aiResults": data["aiResults"]}},
                     upsert=False,
                 )
             else:
-                # Should not happen if input is validated, but good practice
                 print(f"Unknown operation: {operation} for mediaID: {media_id}")
                 errors += 1
                 continue
@@ -74,26 +133,19 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
 
             if len(operations) == BATCH_SIZE or item_count == total:
                 try:
-                    if operations: # ensure operations list is not empty
+                    if operations:
                         bulk_result = collection.bulk_write(operations)
-                        # Count processed based on matched, modified and upserted
-                        # For $push, matched_count is more relevant if items are not always new
-                        # For $set, modified_count or upserted_count are relevant
                         processed += bulk_result.matched_count + bulk_result.upserted_count
                         print(f"Processed batch of {len(operations)}. Total processed: {processed}/{total}")
-                        operations = []  # Reset for the next batch
+                        operations = []
                 except BulkWriteError as bwe:
                     print(f"Bulk write error: {bwe.details}")
-                    # Increment errors by the number of write errors
                     errors += len(bwe.details.get('writeErrors', []))
-                    # For simplicity, we're counting successful batches' effects on `processed`
-                    # For now, we assume a batch either largely succeeds or its errors are counted.
                 except Exception as e:
                     print(f"Error during bulk write: {str(e)}")
-                    errors += len(operations) # Assuming all operations in the batch failed
-                    operations = [] # Reset for the next batch
+                    errors += len(operations)
+                    operations = []
 
-        # Final print to show completion, even if total is 0 or last batch was smaller
         print(f"\nOperation complete:")
         print(f"Total records to process: {total}")
         print(f"Successfully processed (based on matched/upserted): {processed}")
