@@ -22,13 +22,13 @@ def get_mongo_connection() -> Tuple[MongoClient, Database, Collection]:
     collection = db[COLLECTION_NAME]
     return client, db, collection
 
-def update_mongo_records(json_file: str, operation: str = "update") -> None:
+def update_mongo_records(json_file: str, operation: str = "append") -> None:
     """
     Update MongoDB records with AI results using bulk operations.
 
     Args:
         json_file (str): Path to the JSON file with detection results
-        operation (str): One of 'update', or 'replace'
+        operation (str): One of 'append', or 'replace'
     """
     # Get MongoDB connection
     client, db, collection = get_mongo_connection()
@@ -55,14 +55,14 @@ def update_mongo_records(json_file: str, operation: str = "update") -> None:
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$addToSet": {"aiResults": {"$each": data["aiResults"]}}},
-                    upsert=True,
+                    upsert=False,
                 )
             elif operation == "replace":
                 # Standardizing to mediaID as discussed in the problem description
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$set": {"aiResults": data["aiResults"]}},
-                    upsert=True,
+                    upsert=False,
                 )
             else:
                 # Should not happen if input is validated, but good practice
