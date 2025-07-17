@@ -50,3 +50,4 @@ ai_results/*.json
 temp_tools/ur-speciesnet-persistent/output/predictions_dict_master.json
 temp_tools/ur-speciesnet-persistent/ur_test_medias_prod.csv
 temp_tools/ur-speciesnet-persistent/ur_test_medias_prod_filtered.csv
+temp_tools/test.users.json
