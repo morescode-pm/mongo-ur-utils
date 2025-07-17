@@ -54,8 +54,14 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
         if operation == "append":
             # Step 1: Query DB for all mediaIDs in the file
             print(f"\nStarting Append Operations...\n")
-            db_docs = collection.find({"mediaID": {"$in": media_ids}}, {"mediaID": 1, "aiResults": 1})
-            db_map = {doc["mediaID"]: doc for doc in db_docs}
+            db_docs = collection.find({"mediaID": {"$in": media_ids}}, {"mediaID": 1})
+
+            from more_itertools import chunked
+            db_map = {}
+            for chunk in chunked(media_ids, 500):
+                docs = collection.find({"mediaID": {"$in": chunk}}, {"mediaID": 1, "aiResults": 1})
+                for doc in docs:
+                    db_map[doc["mediaID"]] = doc
 
             not_found = []
             already_has_airesults = []
