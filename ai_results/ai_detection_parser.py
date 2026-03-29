@@ -41,13 +41,16 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None) -> Dict[
         run_date = pred.get("run_date", "unknown")
 
         animal_confs = []
-        animal_boxes = []
+        animal_detections = []
         human_confs = []
 
         for det in detections:
             if det["label"] == "animal":
                 animal_confs.append(float(det["conf"]))
-                animal_boxes.append(det["bbox"])
+                animal_detections.append({
+                    "bbox": det["bbox"],
+                    "conf": float(det["conf"])
+                })
             elif det["label"] == "human":
                 human_confs.append(float(det["conf"]))
 
@@ -73,7 +76,7 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None) -> Dict[
             "confBlank": conf_blank,
             "confHuman": conf_human,
             "confAnimal": conf_animal,
-            "animalDetections": animal_boxes
+            "animalDetections": animal_detections
         }
 
         results[media_id] = {

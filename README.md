@@ -75,7 +75,13 @@ The `ai_mongo_operations.py` script will add or update an `aiResults` field in y
       "runDate": "2025-06-08",
       "confBlank": 0.0,
       "confHuman": 0.0,
-      "confAnimal": 0.95
+      "confAnimal": 0.95,
+      "animalDetections": [
+        {
+          "bbox": [0.1, 0.2, 0.3, 0.4],
+          "conf": 0.95
+        }
+      ]
     }
     // ... other AI results may be present if using 'update' ...
   ]
