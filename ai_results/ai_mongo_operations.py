@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 from typing import Tuple
 from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
@@ -120,7 +121,7 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
             print(f"Errors: {errors}")
             return
 
-        # ...existing code for replace/update operation...
+        # Handle 'replace' and 'update' operations
         print(f'Starting {operation} Operation\n')
         for media_id, data in results.items():
             item_count += 1
@@ -187,27 +188,45 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
             client.close()
 
 def main():
-    """Main function to demonstrate usage"""
-    # Check if the formatted detections file exists
-    json_file = "mongodb_formatted_detections.json"
-    if not os.path.exists(json_file):
-        print(f"Error: {json_file} not found.")
-        print("Please run detection_parser.py first to generate the file.")
+    """Main function to handle record updates"""
+    parser = argparse.ArgumentParser(description="Update MongoDB records with AI results.")
+    parser.add_argument(
+        "--input",
+        type=str,
+        default="mongodb_formatted_detections.json",
+        help="Path to the JSON file with detection results (default: mongodb_formatted_detections.json)"
+    )
+    parser.add_argument(
+        "--op",
+        type=str,
+        choices=["append", "update", "replace"],
+        help="Operation type: 'append', 'update', or 'replace'"
+    )
+
+    args = parser.parse_args()
+
+    # Check if the input file exists
+    if not os.path.exists(args.input):
+        print(f"Error: {args.input} not found.")
+        print("Please run ai_detection_parser.py first to generate the file.")
         return
 
-    # Ask for operation type
-    print("\nAvailable operations:")
-    print("1. append - Add new AI results to existing documents if they don't exist")
-    print("2. update - Update existing AI results in the aiResults array by model/date")
-    print("3. replace - Replace existing AI results")
-    
-    operation = input("\nSelect operation type (append/update/replace): ").lower()
+    operation = args.op
+    if not operation:
+        # Fallback to interactive mode if no operation is specified
+        print("\nAvailable operations:")
+        print("1. append - Add new AI results to existing documents if they don't exist")
+        print("2. update - Update existing AI results in the aiResults array by model/date")
+        print("3. replace - Replace existing AI results")
+
+        operation = input("\nSelect operation type (append/update/replace): ").lower()
+
     if operation not in ["append", "update", "replace"]:
         print("Invalid operation type. Please choose 'append', 'update', or 'replace'.")
         return
 
     # Process the records
-    update_mongo_records(json_file, operation)
+    update_mongo_records(args.input, operation)
 
 if __name__ == "__main__":
     main()
