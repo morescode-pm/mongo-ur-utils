@@ -57,7 +57,8 @@ After `mongodb_formatted_detections.json` has been generated, this script is use
 python ai_mongo_operations.py
 ```
 You will be prompted to choose an operation:
-- **`update`**: Adds new AI results to the `aiResults` array in existing documents. This is useful for adding results from a new model run without removing previous ones.
+- **`append`**: Adds new AI results to the `aiResults` array in existing documents if the array doesn't exist yet.
+- **`update`**: Updates existing AI result entries in the `aiResults` array by matching `modelName` and `runDate`. This is useful for adding `animalDetections` to existing records.
 - **`replace`**: Replaces the entire `aiResults` array in existing documents with the new results from the JSON file. This is useful if you want to overwrite previous results with a new, complete set.
 
 ## MongoDB Document Structure for AI Results
@@ -89,8 +90,9 @@ The `ai_mongo_operations.py` script will add or update an `aiResults` field in y
 ```
 
 ## Detailed Operations in `ai_mongo_operations.py`
-- **`update`**: Appends new entries to the `aiResults` array of existing documents. If the document doesn't exist (which is not expected per current workflow assumptions but handled by `upsert=True`), it would create a new document with the `mediaID` and `aiResults`.
-- **`replace`**: Overwrites the existing `aiResults` array with the new entries. If the document doesn't exist (again, not expected but handled by `upsert=True`), it would create a new document.  
+- **`append`**: Appends new entries to the `aiResults` array of existing documents if they don't have AI results yet.
+- **`update`**: Updates specific entries within the `aiResults` array by matching `modelName` and `runDate`. This is useful for enriching existing results with new data like `animalDetections`.
+- **`replace`**: Overwrites the existing `aiResults` array with the new entries.
 
 ---
 ---  

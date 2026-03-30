@@ -28,7 +28,7 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
 
     Args:
         json_file (str): Path to the JSON file with detection results
-        operation (str): One of 'append', or 'replace'
+        operation (str): One of 'append', 'replace', or 'update'
     """
     # Get MongoDB connection
     client, db, collection = get_mongo_connection()
@@ -120,24 +120,40 @@ def update_mongo_records(json_file: str, operation: str = "append") -> None:
             print(f"Errors: {errors}")
             return
 
-        # ...existing code for replace operation...
+        # ...existing code for replace/update operation...
         print(f'Starting {operation} Operation\n')
         for media_id, data in results.items():
-            item_count +=1
+            item_count += 1
             if operation == "replace":
                 op = UpdateOne(
                     {"mediaID": media_id},
                     {"$set": {"aiResults": data["aiResults"]}},
                     upsert=False,
                 )
+                operations.append(op)
+            elif operation == "update":
+                for ai_result in data["aiResults"]:
+                    # Update a specific entry in the aiResults array if modelName and runDate match
+                    op = UpdateOne(
+                        {
+                            "mediaID": media_id,
+                            "aiResults": {
+                                "$elemMatch": {
+                                    "modelName": ai_result["modelName"],
+                                    "runDate": ai_result["runDate"]
+                                }
+                            }
+                        },
+                        {"$set": {"aiResults.$": ai_result}},
+                        upsert=False,
+                    )
+                    operations.append(op)
             else:
                 print(f"Unknown operation: {operation} for mediaID: {media_id}")
                 errors += 1
                 continue
 
-            operations.append(op)
-
-            if len(operations) == BATCH_SIZE or item_count == total:
+            if len(operations) >= BATCH_SIZE or item_count == total:
                 try:
                     if operations:
                         bulk_result = collection.bulk_write(operations)
@@ -182,11 +198,12 @@ def main():
     # Ask for operation type
     print("\nAvailable operations:")
     print("1. append - Add new AI results to existing documents if they don't exist")
-    print("2. replace - Replace existing AI results")
+    print("2. update - Update existing AI results in the aiResults array by model/date")
+    print("3. replace - Replace existing AI results")
     
-    operation = input("\nSelect operation type (append/replace): ").lower()
-    if operation not in ["append", "replace"]:
-        print("Invalid operation type. Please choose 'append', or 'replace'.")
+    operation = input("\nSelect operation type (append/update/replace): ").lower()
+    if operation not in ["append", "update", "replace"]:
+        print("Invalid operation type. Please choose 'append', 'update', or 'replace'.")
         return
 
     # Process the records
