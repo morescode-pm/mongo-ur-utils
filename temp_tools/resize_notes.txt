@@ -1,0 +1,60 @@
+# This snippet is used before megadetector to resize all images from mongodb
+
+# Create a tool for resizing so cropping top and bottom can happen while keeping the aspect ratio
+def resize_to_height(image, target_width=1280):
+    og_width, og_height = image.size
+    new_height = int(og_height * (target_width / og_width))
+    return image.resize((target_width, new_height))
+
+# Tool for download and processing
+def process_row(row, dest_folder, session):
+    url = row['publicURL']
+    filename = f"{row['mediaID']}.jpg"
+    dest = dest_folder / filename
+
+    try:
+        response = session.get(url, timeout=5)
+        response.raise_for_status()
+
+        image = Image.open(BytesIO(response.content)).convert("RGB")
+        image = resize_to_height(image, target_width=1280)
+        image.save(dest, format="JPEG", quality=75)
+    except Exception as e:
+        print(f"failed to process {filename}: {e}")
+
+
+
+## Detection bboxes are stored as 
+
+ "bbox": list[float]  => 
+    Bounding box coordinates, in (xmin, ymin, width, height) format,
+     of the current detection. Coordinates are normalized to the [0.0, 1.0] range, 
+     relative to the image dimensions.
+
+
+## Example
+
+"detections": [
+        {
+          "category": "3",
+          "label": "vehicle",
+          "conf": 0.035122185945510864,
+          "bbox": [
+            0.0,
+            0.0,
+            1.0,
+            0.5697916746139526
+          ]
+        },
+        {
+          "category": "1",
+          "label": "animal",
+          "conf": 0.013687746599316597,
+          "bbox": [
+            0.3523437436670065,
+            0.6375000141561031,
+            0.03046875074505806,
+            0.05104167014360428
+          ]
+        }
+      ],

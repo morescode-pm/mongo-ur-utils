@@ -52,13 +52,20 @@ The output file (`mongodb_formatted_detections.json`) will contain entries where
 ### 2. Update MongoDB Records (`ai_mongo_operations.py`)
 After `mongodb_formatted_detections.json` has been generated, this script is used to update your MongoDB database. It assumes that documents corresponding to each `mediaID` in the JSON file already exist in the database.
 
-**Command:**
+**Command (Interactive):**
 ```bash
 python ai_mongo_operations.py
 ```
-You will be prompted to choose an operation:
-- **`update`**: Adds new AI results to the `aiResults` array in existing documents. This is useful for adding results from a new model run without removing previous ones.
-- **`replace`**: Replaces the entire `aiResults` array in existing documents with the new results from the JSON file. This is useful if you want to overwrite previous results with a new, complete set.
+
+**Command (Arguments):**
+```bash
+python ai_mongo_operations.py --op update --input mongodb_formatted_detections.json
+```
+
+You will be prompted for (or can specify via `--op`):
+- **`append`**: Adds AI results to the `aiResults` array in documents that currently lack an `aiResults` field.
+- **`update`**: Updates existing entries *within* the `aiResults` array by matching the `modelName` and `runDate`. This is ideal for adding new data, like `animalDetections`, to existing records without duplication.
+- **`replace`**: Replaces the entire `aiResults` array in documents with the provided set of results, overwriting any previous data.
 
 ## MongoDB Document Structure for AI Results
 The `ai_mongo_operations.py` script will add or update an `aiResults` field in your MongoDB documents. This field is an array of objects, where each object represents a set of AI analysis results.
@@ -75,7 +82,13 @@ The `ai_mongo_operations.py` script will add or update an `aiResults` field in y
       "runDate": "2025-06-08",
       "confBlank": 0.0,
       "confHuman": 0.0,
-      "confAnimal": 0.95
+      "confAnimal": 0.95,
+      "animalDetections": [
+        {
+          "bbox": [0.1, 0.2, 0.3, 0.4],
+          "conf": 0.95
+        }
+      ]
     }
     // ... other AI results may be present if using 'update' ...
   ]
@@ -83,8 +96,9 @@ The `ai_mongo_operations.py` script will add or update an `aiResults` field in y
 ```
 
 ## Detailed Operations in `ai_mongo_operations.py`
-- **`update`**: Appends new entries to the `aiResults` array of existing documents. If the document doesn't exist (which is not expected per current workflow assumptions but handled by `upsert=True`), it would create a new document with the `mediaID` and `aiResults`.
-- **`replace`**: Overwrites the existing `aiResults` array with the new entries. If the document doesn't exist (again, not expected but handled by `upsert=True`), it would create a new document.  
+- **`append`**: Adds AI results only to documents that do not already have an `aiResults` field. This is used for initial uploads.
+- **`update`**: Iterates through each document and searches the `aiResults` array for entries that match a specific `modelName` and `runDate`. If found, it updates that entry with the new data.
+- **`replace`**: Overwrites the entire `aiResults` array for each document with the data provided in the JSON file.
 
 ---
 ---  
