@@ -49,7 +49,7 @@ def parse_detections(json_file: str, num_samples: Optional[int] = None) -> Dict[
                 animal_confs.append(float(det["conf"]))
                 animal_detections.append({
                     "bbox": det["bbox"],
-                    "conf": float(det["conf"])
+                    "conf": round(float(det["conf"]), 2)
                 })
             elif det["label"] == "human":
                 human_confs.append(float(det["conf"]))
