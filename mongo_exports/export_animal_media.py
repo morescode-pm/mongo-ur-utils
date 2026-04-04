@@ -1,8 +1,8 @@
 import os
-import json
 import argparse
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import pandas as pd
 
 # Load environment variables
 load_dotenv()
@@ -39,7 +39,7 @@ def export_animal_media(output_file):
             "aiResults.confHuman": 1
         }
 
-        print(f"Connecting to {MONGO_URI}, database: {DB_NAME}")
+        print(f"Connecting to database: {DB_NAME}")
         print(f"Querying {COLLECTION_NAME} for records where animal is in frame...")
 
         results = []
@@ -49,9 +49,7 @@ def export_animal_media(output_file):
         for doc in cursor:
             results.append(doc)
 
-        with open(output_file, "w") as f:
-            json.dump(results, f, indent=2, default=str)
-
+        pd.DataFrame(results).to_csv("animal_media_export.csv", index=False)
         print(f"Successfully exported {len(results)} records to {output_file}")
 
     except Exception as e:
