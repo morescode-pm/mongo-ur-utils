@@ -1,39 +1,8 @@
 import json
 
-def test_mock_extraction():
-    # Mock document representing the cameratrapmedias record
+def test_mock_extraction_csv():
+    # Mock document representing the cameratrapmedias record with multiple speciesConsensus entries
     mock_doc = {
-        "_id": "671b09b9c97e2c0a895a1523",
-        "mediaID": "6c50572a982a69f12ca47b808ecbe728",
-        "timestamp": "2024-01-27T11:38:21.000Z",
-        "publicURL": "https://urbanriverrangers.s3.amazonaws.com/images/2024/2024-01-30_prologis_02/DCIM/100MEDIA/SYFW0052.JPG",
-        "consensusStatus": "Pending",
-        "speciesConsensus": [
-            {
-                "observationType": "blank",
-                "scientificName": None,
-                "taxonID": None,
-                "count": 1,
-                "accepted": False,
-                "observationCount": 2,
-                "_id": "67817a0947dc475bcbf5cc50"
-            }
-        ],
-        "aiResults": [
-            {
-                "modelName": "speciesnet/PyTorch/v4.0.1a",
-                "runDate": "2025-07-07",
-                "confBlank": 1,
-                "confHuman": 0,
-                "confAnimal": 0,
-                "animalDetections": []
-            }
-        ],
-        "videoUrl": "https://urbanriverrangers.s3.amazonaws.com/images/2024/2024-01-30_prologis_02/DCIM/100MEDIA/SYFW0053.MP4"
-    }
-
-    # Mock document where scientificName IS NOT NULL
-    mock_doc_animal = {
         "_id": "671b09b9c97e2c0a895a1524",
         "mediaID": "7c50572a982a69f12ca47b808ecbe729",
         "timestamp": "2024-01-27T11:40:21.000Z",
@@ -48,51 +17,71 @@ def test_mock_extraction():
                 "accepted": True,
                 "observationCount": 2,
                 "_id": "67817a0947dc475bcbf5cc51"
+            },
+            {
+                "observationType": "bird",
+                "scientificName": None, # Should be ignored in the export but listed in doc
+                "observationCount": 1,
+            },
+            {
+                "observationType": "mammal",
+                "scientificName": "", # Coalesce should pick mammal
+                "observationCount": 3,
             }
         ],
         "aiResults": [
             {
                 "modelName": "speciesnet/PyTorch/v4.0.1a",
                 "runDate": "2025-07-07",
-                "confBlank": 0,
-                "confHuman": 0.1,
-                "confAnimal": 0.9,
-                "animalDetections": [{"bbox": [0.1, 0.1, 0.2, 0.2], "conf": 0.9}]
+                "confHuman": 0.1
             }
         ],
         "videoUrl": "https://urbanriverrangers.s3.amazonaws.com/images/2024/animal.MP4"
     }
 
-    mock_collection = [mock_doc, mock_doc_animal]
+    mock_collection = [mock_doc]
 
-    # Simulation of filtering logic: "speciesConsensus.scientificName": {"$ne": None}
-    filtered_results = []
+    # Simulation of CSV row generation
+    all_rows = []
     for doc in mock_collection:
-        # Pymongo dot notation filter for nested arrays: "speciesConsensus.scientificName": {"$ne": None}
-        # returns the document if ANY element in speciesConsensus has scientificName != None
-        match = False
-        for sc in doc.get("speciesConsensus", []):
-            if sc.get("scientificName") is not None:
-                match = True
-                break
+        ai_results = doc.get("aiResults", [])
+        conf_human = ""
+        if isinstance(ai_results, list) and ai_results:
+            conf_human = ai_results[-1].get("confHuman", "")
 
-        if match:
-            # Simulation of projection logic
-            projected_doc = {
-                "timestamp": doc.get("timestamp"),
-                "speciesConsensus": [{"scientificName": sc.get("scientificName")} for sc in doc.get("speciesConsensus", [])],
-                "consensusStatus": doc.get("consensusStatus"),
-                "publicURL": doc.get("publicURL"),
-                "videoUrl": doc.get("videoUrl"),
-                "aiResults": [{"confHuman": ai.get("confHuman")} for ai in doc.get("aiResults", [])]
-            }
-            filtered_results.append(projected_doc)
+        species_list = doc.get("speciesConsensus", [])
+        for species in species_list:
+            sci_name = species.get("scientificName")
+            if sci_name is not None:
+                # Coalesce scientificName and observationType
+                species_id = sci_name or species.get("observationType", "")
 
-    print(f"Filtered {len(filtered_results)} documents from mock data.")
-    assert len(filtered_results) == 1
-    assert filtered_results[0]["speciesConsensus"][0]["scientificName"] == "Procyon lotor"
-    assert filtered_results[0]["aiResults"][0]["confHuman"] == 0.1
-    print("Logic test PASSED.")
+                row = {
+                    "timestamp": doc.get("timestamp"),
+                    "speciesIdentification": species_id,
+                    "consensusStatus": doc.get("consensusStatus"),
+                    "publicURL": doc.get("publicURL"),
+                    "videoUrl": doc.get("videoUrl"),
+                    "confHuman": conf_human,
+                    "observationCount": species.get("observationCount", "")
+                }
+                all_rows.append(row)
+
+    print(f"Generated {len(all_rows)} rows from mock data.")
+
+    # We have 3 speciesConsensus items, one has scientificName = None, it should be filtered out by `is not None`
+    # Wait, in the code: `if sci_name is not None:`
+    # Procyon lotor: not None -> row
+    # None: is None -> skip
+    # "": not None -> row (coalesce to "mammal")
+
+    assert len(all_rows) == 2
+    assert all_rows[0]["speciesIdentification"] == "Procyon lotor"
+    assert all_rows[0]["observationCount"] == 2
+    assert all_rows[1]["speciesIdentification"] == "mammal"
+    assert all_rows[1]["observationCount"] == 3
+    assert all_rows[0]["confHuman"] == 0.1
+    print("CSV logic test PASSED.")
 
 if __name__ == "__main__":
-    test_mock_extraction()
+    test_mock_extraction_csv()
