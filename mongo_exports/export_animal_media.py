@@ -39,7 +39,7 @@ def export_animal_media_csv(output_file):
             "aiResults": 1
         }
 
-        print(f"Connecting to {MONGO_URI}, database: {DB_NAME}")
+        print(f"Connecting to database: {DB_NAME}")
         print(f"Querying {COLLECTION_NAME} for records where animal is in frame...")
 
         # collection.find returns a cursor
@@ -47,12 +47,12 @@ def export_animal_media_csv(output_file):
 
         headers = [
             "timestamp",
+            "observationCount",
             "speciesIdentification",
+            "confAnimal",
             "consensusStatus",
             "publicURL",
-            "videoUrl",
-            "confHuman",
-            "observationCount"
+            "videoUrl"
         ]
 
         with open(output_file, "w", newline="", encoding="utf-8") as f:
@@ -61,12 +61,12 @@ def export_animal_media_csv(output_file):
 
             count = 0
             for doc in cursor:
-                # Extract most recent aiResults.confHuman (last in the array if it exists)
+                # Extract most recent aiResults.confAnimal (last in the array if it exists)
                 ai_results = doc.get("aiResults", [])
-                conf_human = ""
+                conf_animal = ""
                 if isinstance(ai_results, list) and ai_results:
                     # Taking the last element as the most recent result
-                    conf_human = ai_results[-1].get("confHuman", "")
+                    conf_animal = ai_results[-1].get("confAnimal", "")
 
                 # Iterate through speciesConsensus to create rows for each scientificName entry
                 species_list = doc.get("speciesConsensus", [])
@@ -81,12 +81,12 @@ def export_animal_media_csv(output_file):
 
                         row = {
                             "timestamp": doc.get("timestamp"),
+                            "observationCount": species.get("observationCount", ""),
                             "speciesIdentification": species_id,
+                            "confAnimal": conf_animal,
                             "consensusStatus": doc.get("consensusStatus"),
                             "publicURL": doc.get("publicURL"),
-                            "videoUrl": doc.get("videoUrl"),
-                            "confHuman": conf_human,
-                            "observationCount": species.get("observationCount", "")
+                            "videoUrl": doc.get("videoUrl")
                         }
                         writer.writerow(row)
                         count += 1
