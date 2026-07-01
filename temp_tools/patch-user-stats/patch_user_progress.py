@@ -121,7 +121,11 @@ def evaluate_achievements(stats, all_achievements, existing_achievements_map):
                     meets_all = False
 
                 # Progress as a percentage capped at 100
-                progress_percentages.append(min(100, (current_val / threshold) * 100))
+                if threshold > 0:
+                    progress_percentages.append(min(100, (current_val / threshold) * 100))
+                else:
+                    # If threshold is 0, any current_val >= 0 meets it
+                    progress_percentages.append(100.0)
 
             progress_val = min(progress_percentages) if progress_percentages else 100
 

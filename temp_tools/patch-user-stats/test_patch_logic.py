@@ -46,6 +46,18 @@ def test_patch_logic():
     # Expected points: 100 + 120 + 500 + 300 + 700 + 10 + 100 = 1830
     assert total_points == 1830, f"Expected 1830 points, got {total_points}"
 
+    # Test ZeroDivisionError fix with a mock zero-threshold achievement
+    zero_ach = {
+        "_id": "zero_id",
+        "points": 50,
+        "criteria": [{"type": "imagesReviewed", "threshold": 0}]
+    }
+    updated_ach_zero, total_points_zero = evaluate_achievements(stats, all_achievements + [zero_ach], {})
+    assert total_points_zero == 1830 + 50
+    zero_entry = next(a for a in updated_ach_zero if a["achievement"] == "zero_id")
+    assert zero_entry["progress"] == 100.0
+    assert zero_entry["earnedAt"] is not None
+
     # Check progress for a partially completed one (River Guardian)
     def get_id_str(ach_id):
         if isinstance(ach_id, dict) and "$oid" in ach_id:
