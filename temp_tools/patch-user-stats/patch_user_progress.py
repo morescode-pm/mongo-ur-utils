@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI_PROD", "mongodb://localhost:27017")
+MONGO_URI = os.getenv("MONGO_URI_DEV", "mongodb://localhost:27017")
 DB_NAME = os.getenv("MONGO_DB", "urbanrivers")
 
 def get_db():

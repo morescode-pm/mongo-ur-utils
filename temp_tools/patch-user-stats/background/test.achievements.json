@@ -1,0 +1,357 @@
+[{
+  "_id": {
+    "$oid": "679714d7fb7517403711fd85"
+  },
+  "name": "Virtue Signaler",
+  "description": "You've helped just enough to show you care, but not much more",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/d9d97711-df11-411a-a9f2-6d464e709668",
+  "level": 1,
+  "type": "RANK",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 100,
+      "operator": "gte",
+      "_id": {
+        "$oid": "679714d7fb7517403711fd86"
+      }
+    },
+    {
+      "type": "animalsObserved",
+      "threshold": 3,
+      "operator": "gte",
+      "_id": {
+        "$oid": "679714d7fb7517403711fd87"
+      }
+    }
+  ],
+  "points": 100,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-01-27T05:08:39.176Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-04T19:31:48.904Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6797185f1e9ce1779232c943"
+  },
+  "name": "Ten-bagger",
+  "description": "You have successfully identified 10 different species of animal",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/ec844065-9e3b-40c2-94be-c405ff439c1d",
+  "level": 2,
+  "type": "MILESTONE",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "uniqueSpecies",
+      "threshold": 10,
+      "operator": "gte",
+      "_id": {
+        "$oid": "6797185f1e9ce1779232c944"
+      }
+    }
+  ],
+  "points": 120,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-01-27T05:23:43.224Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-27T06:23:26.451Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679c07830927e747623512ee"
+  },
+  "name": "Digital Time-Waster",
+  "description": "5,000 images? yeesh, get a life",
+  "icon": "🐢",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/780bbc6f-a4a1-49f0-8ab2-b1bfe31fa09a",
+  "level": 3,
+  "type": "RANK",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 5000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "679c07830927e747623512ef"
+      }
+    }
+  ],
+  "points": 500,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-01-30T23:13:07.601Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-04T19:31:31.768Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "679c07e7b41d8ce3be3b60bf"
+  },
+  "name": "Hustler",
+  "description": "You're getting there! Keep it up!",
+  "icon": "🦫",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/087b4d7b-1e99-419f-90b1-b2b9f5298588",
+  "level": 2,
+  "type": "RANK",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 1000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "679c07e7b41d8ce3be3b60c0"
+      }
+    }
+  ],
+  "points": 300,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-01-30T23:14:47.302Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-04T19:31:43.553Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f1819f0fe8cfe6859dc3df"
+  },
+  "name": "Busy Beaver",
+  "description": "One stick at a time, one log at a time, one observation at a time.",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/fb31d826-fb3a-4d21-ab4d-f7139380e9fb",
+  "level": 4,
+  "type": "RANK",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 9000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f1819f0fe8cfe6859dc3e0"
+      }
+    }
+  ],
+  "points": 700,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-04-05T19:16:47.071Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-05T19:17:37.280Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f184860fe8cfe6859dc421"
+  },
+  "name": "River Guardian",
+  "description": "That's 15000 observations. Your level of dedication is as rare as seeing a river otter.",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/45cae2dd-d533-4a28-92df-8f5631a720b7",
+  "level": 5,
+  "type": "RANK",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 15000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f184860fe8cfe6859dc422"
+      }
+    }
+  ],
+  "points": 900,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-04-05T19:29:10.117Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-05T19:50:57.388Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f186860fe8cfe6859dc435"
+  },
+  "name": "Getting Started",
+  "description": "Reviewed your first camera trap image with an animal in it!",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/ab344cb7-9fad-440b-9a7b-5a94352ae3ea",
+  "level": 1,
+  "type": "MILESTONE",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 10,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f186860fe8cfe6859dc436"
+      }
+    },
+    {
+      "type": "uniqueSpecies",
+      "threshold": 5,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f186860fe8cfe6859dc437"
+      }
+    }
+  ],
+  "points": 10,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-04-05T19:37:42.720Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-05T19:37:42.720Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f189dd003687a3ef30b35d"
+  },
+  "name": "Candy Corn Conservationist",
+  "description": "1000 blanks. Ok, yep, there are a lot of blanks to sort through.",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/745b4b16-e3f2-4945-9f1a-a9435bcc2848",
+  "level": 1,
+  "type": "MILESTONE",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "blanksLogged",
+      "threshold": 1000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f189dd003687a3ef30b35e"
+      }
+    }
+  ],
+  "points": 100,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-04-05T19:51:57.559Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-05T19:51:57.559Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f18a09003687a3ef30b3fe"
+  },
+  "name": "Gummy Bear Guide",
+  "description": "2000 blanks marked. You're the gummy bear to my guide.",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/d34574ba-7e0b-441d-85ed-b610450e80e2",
+  "level": 2,
+  "type": "MILESTONE",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "blanksLogged",
+      "threshold": 2000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f18a09003687a3ef30b3ff"
+      }
+    }
+  ],
+  "points": 200,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-04-05T19:52:41.651Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-05T19:52:41.651Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f18a32e6498820c28026d0"
+  },
+  "name": "Licorice Legend",
+  "description": "4000 blanks. Have some candy that only 5% of the world likes.",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/c22b1205-2a88-4781-a274-4ad72014a9a0",
+  "level": 3,
+  "type": "MILESTONE",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "blanksLogged",
+      "threshold": 4000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "67f18a32e6498820c28026d1"
+      }
+    }
+  ],
+  "points": 400,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-04-05T19:53:22.904Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-05T19:53:22.904Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69ceef420a2f751ffe6f1ff9"
+  },
+  "name": "the G.O.A.T",
+  "description": "",
+  "icon": "",
+  "badge": "https://urbanriverrangers.s3.us-east-2.amazonaws.com/badges/37849612-96d2-4018-a571-a2d0e2df4891",
+  "level": 6,
+  "type": "RANK",
+  "domain": "CAMERATRAP",
+  "criteria": [
+    {
+      "type": "imagesReviewed",
+      "threshold": 20000,
+      "operator": "gte",
+      "_id": {
+        "$oid": "69ceef420a2f751ffe6f1ffa"
+      }
+    }
+  ],
+  "points": 1200,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2026-04-02T22:35:46.778Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-04T19:01:13.039Z"
+  },
+  "__v": 0
+}]
