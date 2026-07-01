@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI_DEV", "mongodb://localhost:27017")
+MONGO_URI = os.getenv("MONGO_URI_PROD", "mongodb://localhost:27017")
 DB_NAME = os.getenv("MONGO_DB", "urbanrivers")
 
 def get_db():
@@ -51,7 +51,6 @@ def calculate_stats(observations):
         if isinstance(event_start, datetime):
             active_days.add(event_start.date())
         elif isinstance(event_start, dict) and "$date" in event_start:
-            # Handle MongoDB JSON format if necessary (though pymongo returns datetime)
             dt_str = event_start["$date"]
             if dt_str.endswith("Z"):
                 dt_str = dt_str[:-1]
@@ -78,9 +77,6 @@ def calculate_stats(observations):
             prev_day = sorted_days[i]
         longest_streak = max(longest_streak, temp_streak)
 
-        # Current streak logic:
-        # If the last active day is today or yesterday, the current streak is the last temp_streak.
-        # Otherwise it is 0.
         today = datetime.now(timezone.utc).date()
         if (today - sorted_days[-1]).days <= 1:
             current_streak = temp_streak
@@ -94,6 +90,59 @@ def calculate_stats(observations):
 
     return stats, streaks
 
+def evaluate_achievements(stats, all_achievements, existing_achievements_map):
+    """
+    Evaluates achievement progress based on stats.
+    Returns a list of achievement progress documents for UserProgress.
+    """
+    updated_achievements = []
+    total_points = 0
+
+    for ach in all_achievements:
+        ach_id = ach["_id"]
+        criteria = ach.get("criteria", [])
+
+        # Calculate progress: minimum percentage towards all criteria
+        # Or if we just need a absolute progress number, it's often the sum or min of raw values
+        # Looking at the sample, "progress" seems to be a single number.
+        # Let's assume progress is the minimum achievement of any single criteria threshold.
+
+        meets_all = True
+        progress_val = 100 # Default if no criteria?
+
+        if criteria:
+            progress_percentages = []
+            for criterion in criteria:
+                c_type = criterion["type"]
+                threshold = criterion["threshold"]
+                current_val = stats.get(c_type, 0)
+
+                if current_val < threshold:
+                    meets_all = False
+
+                # Progress as a percentage capped at 100
+                progress_percentages.append(min(100, (current_val / threshold) * 100))
+
+            progress_val = min(progress_percentages) if progress_percentages else 100
+
+        # Existing record
+        existing = existing_achievements_map.get(str(ach_id), {})
+        earned_at = existing.get("earnedAt")
+
+        if meets_all and not earned_at:
+            earned_at = datetime.now(timezone.utc)
+
+        if earned_at:
+            total_points += ach.get("points", 0)
+
+        updated_achievements.append({
+            "achievement": ach_id,
+            "earnedAt": earned_at,
+            "progress": round(progress_val, 2)
+        })
+
+    return updated_achievements, total_points
+
 def patch_user(user_id_str):
     db = get_db()
     try:
@@ -104,28 +153,45 @@ def patch_user(user_id_str):
 
     print(f"Patching stats for user: {user_id_str}")
 
-    # Fetch all observations for this user
+    # 1. Fetch all observations for this user
     observations = list(db.observations.find({"creator": user_oid}))
     print(f"Found {len(observations)} observations.")
 
     if not observations:
         print("No observations found for this user. Nothing to patch.")
+        # We might still want to reset their stats to 0 if they exist
+        # but usually this indicates a new user or error
         return
 
+    # 2. Calculate Stats
     stats_update, streaks = calculate_stats(observations)
 
+    # 3. Fetch all active achievements
+    all_achievements = list(db.achievements.find({"isActive": True}))
+    print(f"Found {len(all_achievements)} active achievements.")
+
+    # 4. Fetch existing UserProgress to preserve earnedAt if possible
+    user_progress = db.userprogresses.find_one({"user": user_oid})
+    existing_achievements_map = {}
+    if user_progress:
+        for ach_progress in user_progress.get("achievements", []):
+            ach_id = ach_progress.get("achievement")
+            if isinstance(ach_id, ObjectId):
+                existing_achievements_map[str(ach_id)] = ach_progress
+            elif isinstance(ach_id, dict) and "$oid" in ach_id:
+                existing_achievements_map[ach_id["$oid"]] = ach_progress
+
+    # 5. Evaluate Achievements
+    updated_achievements, total_points = evaluate_achievements(stats_update, all_achievements, existing_achievements_map)
+
     print("Calculated Stats:")
-    print(f"  Images Reviewed: {stats_update['imagesReviewed']}")
-    print(f"  Animals Observed: {stats_update['animalsObserved']}")
-    print(f"  Unique Species: {stats_update['uniqueSpecies']}")
-    print(f"  Blanks Logged: {stats_update['blanksLogged']}")
+    for k, v in stats_update.items():
+        print(f"  {k}: {v}")
     print(f"  Longest Streak: {streaks['longest']}")
     print(f"  Current Streak: {streaks['current']}")
+    print(f"  Total Points (from achievements): {total_points}")
 
-    # Points logic (placeholder: 1 point per image reviewed)
-    total_points = stats_update['imagesReviewed']
-
-    # Update UserProgress
+    # 6. Update UserProgress
     update_data = {
         "$set": {
             "stats.imagesReviewed": stats_update["imagesReviewed"],
@@ -135,23 +201,24 @@ def patch_user(user_id_str):
             "stats.consecutiveDays": streaks["current"],
             "streaks.longest": streaks["longest"],
             "streaks.current": streaks["current"],
+            "achievements": updated_achievements,
             "totalPoints": total_points,
             "domainRanks.CAMERATRAP.points": total_points,
             "updatedAt": datetime.now(timezone.utc)
         }
     }
 
-    result = db.userprogresses.update_one({"user": user_oid}, update_data)
+    result = db.userprogresses.update_one({"user": user_oid}, update_data, upsert=True)
 
     if result.matched_count > 0:
         print(f"Successfully updated userprogress for {user_id_str}")
+    elif result.upserted_id:
+        print(f"Successfully created new userprogress for {user_id_str}")
     else:
-        # If no document exists, we might want to create one?
-        # For now, just report it.
-        print(f"No userprogress document found for user {user_id_str}")
+        print(f"No changes made for user {user_id_str}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Patch user progress stats from observation history.")
+    parser = argparse.ArgumentParser(description="Patch user progress stats from observation history and achievements.")
     parser.add_argument("user_id", help="The MongoDB ObjectId of the user to patch.")
     args = parser.parse_args()
 
