@@ -27,7 +27,7 @@ def test_patch_logic():
     assert streaks["longest"] == 9, f"Expected longest streak 9, got {streaks['longest']}"
 
     # Test Achievement evaluation
-    updated_achievements, total_points = evaluate_achievements(stats, all_achievements, {})
+    updated_achievements, total_points, newly_earned = evaluate_achievements(stats, all_achievements, {})
 
     print(f"Total Points: {total_points}")
     # Expected points based on stats:
@@ -52,7 +52,7 @@ def test_patch_logic():
         "points": 50,
         "criteria": [{"type": "imagesReviewed", "threshold": 0}]
     }
-    updated_ach_zero, total_points_zero = evaluate_achievements(stats, all_achievements + [zero_ach], {})
+    updated_ach_zero, total_points_zero, _ = evaluate_achievements(stats, all_achievements + [zero_ach], {})
     assert total_points_zero == 1830 + 50
     zero_entry = next(a for a in updated_ach_zero if a["achievement"] == "zero_id")
     assert zero_entry["progress"] == 100.0

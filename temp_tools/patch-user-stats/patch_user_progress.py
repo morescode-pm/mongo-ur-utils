@@ -97,21 +97,16 @@ def evaluate_achievements(stats, all_achievements, existing_achievements_map):
     """
     updated_achievements = []
     total_points = 0
+    newly_earned = []
 
     for ach in all_achievements:
         ach_id = ach["_id"]
         criteria = ach.get("criteria", [])
 
-        # Calculate progress: minimum percentage towards all criteria
-        # Or if we just need a absolute progress number, it's often the sum or min of raw values
-        # Looking at the sample, "progress" seems to be a single number.
-        # Let's assume progress is the minimum achievement of any single criteria threshold.
-
         meets_all = True
-        progress_val = 100 # Default if no criteria?
+        progress_percentages = []
 
         if criteria:
-            progress_percentages = []
             for criterion in criteria:
                 c_type = criterion["type"]
                 threshold = criterion["threshold"]
@@ -120,14 +115,14 @@ def evaluate_achievements(stats, all_achievements, existing_achievements_map):
                 if current_val < threshold:
                     meets_all = False
 
-                # Progress as a percentage capped at 100
                 if threshold > 0:
                     progress_percentages.append(min(100, (current_val / threshold) * 100))
                 else:
-                    # If threshold is 0, any current_val >= 0 meets it
                     progress_percentages.append(100.0)
 
             progress_val = min(progress_percentages) if progress_percentages else 100
+        else:
+            progress_val = 100
 
         # Existing record
         existing = existing_achievements_map.get(str(ach_id), {})
@@ -135,6 +130,7 @@ def evaluate_achievements(stats, all_achievements, existing_achievements_map):
 
         if meets_all and not earned_at:
             earned_at = datetime.now(timezone.utc)
+            newly_earned.append(ach.get("name", str(ach_id)))
 
         if earned_at:
             total_points += ach.get("points", 0)
@@ -145,9 +141,14 @@ def evaluate_achievements(stats, all_achievements, existing_achievements_map):
             "progress": round(progress_val, 2)
         })
 
-    return updated_achievements, total_points
+    return updated_achievements, total_points, newly_earned
 
-def patch_user(user_id_str):
+def print_comparison(label, current, new):
+    diff = new - current
+    diff_str = f"(+{diff})" if diff >= 0 else f"({diff})"
+    print(f"  {label:<20}: {current:>8} -> {new:>8} {diff_str:>8}")
+
+def patch_user(user_id_str, auto_approve=False):
     db = get_db()
     try:
         user_oid = ObjectId(user_id_str)
@@ -155,27 +156,20 @@ def patch_user(user_id_str):
         print(f"Invalid User ID format: {user_id_str}")
         return
 
-    print(f"Patching stats for user: {user_id_str}")
+    print(f"\n--- Patching User: {user_id_str} ---")
 
-    # 1. Fetch all observations for this user
+    # 1. Fetch data
     observations = list(db.observations.find({"creator": user_oid}))
-    print(f"Found {len(observations)} observations.")
-
     if not observations:
         print("No observations found for this user. Nothing to patch.")
-        # We might still want to reset their stats to 0 if they exist
-        # but usually this indicates a new user or error
         return
 
-    # 2. Calculate Stats
-    stats_update, streaks = calculate_stats(observations)
-
-    # 3. Fetch all active achievements
     all_achievements = list(db.achievements.find({"isActive": True}))
-    print(f"Found {len(all_achievements)} active achievements.")
-
-    # 4. Fetch existing UserProgress to preserve earnedAt if possible
     user_progress = db.userprogresses.find_one({"user": user_oid})
+
+    # 2. Calculate New Stats
+    stats_new, streaks_new = calculate_stats(observations)
+
     existing_achievements_map = {}
     if user_progress:
         for ach_progress in user_progress.get("achievements", []):
@@ -185,29 +179,54 @@ def patch_user(user_id_str):
             elif isinstance(ach_id, dict) and "$oid" in ach_id:
                 existing_achievements_map[ach_id["$oid"]] = ach_progress
 
-    # 5. Evaluate Achievements
-    updated_achievements, total_points = evaluate_achievements(stats_update, all_achievements, existing_achievements_map)
+    updated_achievements, points_new, newly_earned = evaluate_achievements(stats_new, all_achievements, existing_achievements_map)
 
-    print("Calculated Stats:")
-    for k, v in stats_update.items():
-        print(f"  {k}: {v}")
-    print(f"  Longest Streak: {streaks['longest']}")
-    print(f"  Current Streak: {streaks['current']}")
-    print(f"  Total Points (from achievements): {total_points}")
+    # 3. Show Comparison
+    print("\nSTATISTICS COMPARISON:")
+    stats_old = user_progress.get("stats", {}) if user_progress else {}
+    streaks_old = user_progress.get("streaks", {}) if user_progress else {}
+    points_old = user_progress.get("totalPoints", 0) if user_progress else 0
 
-    # 6. Update UserProgress
+    metrics = [
+        ("Images Reviewed", stats_old.get("imagesReviewed", 0), stats_new["imagesReviewed"]),
+        ("Animals Observed", stats_old.get("animalsObserved", 0), stats_new["animalsObserved"]),
+        ("Unique Species", stats_old.get("uniqueSpecies", 0), stats_new["uniqueSpecies"]),
+        ("Blanks Logged", stats_old.get("blanksLogged", 0), stats_new["blanksLogged"]),
+        ("Current Streak", streaks_old.get("current", 0), streaks_new["current"]),
+        ("Longest Streak", streaks_old.get("longest", 0), streaks_new["longest"]),
+        ("Total Points", points_old, points_new),
+    ]
+
+    for label, old, new in metrics:
+        print_comparison(label, old, new)
+
+    if newly_earned:
+        print("\nNEWLY EARNED ACHIEVEMENTS:")
+        for name in newly_earned:
+            print(f"  + {name}")
+    else:
+        print("\nNo new achievements earned.")
+
+    # 4. Confirmation
+    if not auto_approve:
+        response = input("\nDo you want to apply these changes? [y/N]: ").lower()
+        if response != 'y':
+            print("Operation cancelled.")
+            return
+
+    # 5. Update Database
     update_data = {
         "$set": {
-            "stats.imagesReviewed": stats_update["imagesReviewed"],
-            "stats.animalsObserved": stats_update["animalsObserved"],
-            "stats.uniqueSpecies": stats_update["uniqueSpecies"],
-            "stats.blanksLogged": stats_update["blanksLogged"],
-            "stats.consecutiveDays": streaks["current"],
-            "streaks.longest": streaks["longest"],
-            "streaks.current": streaks["current"],
+            "stats.imagesReviewed": stats_new["imagesReviewed"],
+            "stats.animalsObserved": stats_new["animalsObserved"],
+            "stats.uniqueSpecies": stats_new["uniqueSpecies"],
+            "stats.blanksLogged": stats_new["blanksLogged"],
+            "stats.consecutiveDays": streaks_new["current"],
+            "streaks.longest": streaks_new["longest"],
+            "streaks.current": streaks_new["current"],
             "achievements": updated_achievements,
-            "totalPoints": total_points,
-            "domainRanks.CAMERATRAP.points": total_points,
+            "totalPoints": points_new,
+            "domainRanks.CAMERATRAP.points": points_new,
             "updatedAt": datetime.now(timezone.utc)
         }
     }
@@ -215,15 +234,16 @@ def patch_user(user_id_str):
     result = db.userprogresses.update_one({"user": user_oid}, update_data, upsert=True)
 
     if result.matched_count > 0:
-        print(f"Successfully updated userprogress for {user_id_str}")
+        print(f"\nSuccessfully updated userprogress for {user_id_str}")
     elif result.upserted_id:
-        print(f"Successfully created new userprogress for {user_id_str}")
+        print(f"\nSuccessfully created new userprogress for {user_id_str}")
     else:
-        print(f"No changes made for user {user_id_str}")
+        print(f"\nNo changes needed for user {user_id_str}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Patch user progress stats from observation history and achievements.")
     parser.add_argument("user_id", help="The MongoDB ObjectId of the user to patch.")
+    parser.add_argument("--yes", action="store_true", help="Automatically approve the changes.")
     args = parser.parse_args()
 
-    patch_user(args.user_id)
+    patch_user(args.user_id, auto_approve=args.yes)
