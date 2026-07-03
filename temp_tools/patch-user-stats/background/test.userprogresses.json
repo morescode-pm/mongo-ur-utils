@@ -1,0 +1,163 @@
+[{
+  "_id": {
+    "$oid": "6a4301407b665e02c1e0bd72"
+  },
+  "user": {
+    "$oid": "69fc34d704c822bc61075209"
+  },
+  "level": 1,
+  "totalPoints": 0,
+  "domainRanks": {
+    "CAMERATRAP": {
+      "currentRank": null,
+      "points": 0,
+      "_id": {
+        "$oid": "6a4301417b665e02c1e0bda9"
+      }
+    }
+  },
+  "stats": {
+    "imagesReviewed": 0,
+    "animalsObserved": 0,
+    "uniqueSpecies": 0,
+    "consecutiveDays": 0,
+    "blanksLogged": 0,
+    "deploymentsReviewed": 0,
+    "speciesConsensus": 0,
+    "expertVerified": 0,
+    "itemsLogged": 0,
+    "uniqueMaterials": 0,
+    "cleanupEvents": 0,
+    "weightCollected": 0,
+    "locationsMonitored": 0,
+    "dataQualityScore": 0,
+    "samplesCollected": 0,
+    "parametersMeasured": 0,
+    "sitesMonitored": 0,
+    "qualityChecksPassed": 0,
+    "consecutiveSampling": 0
+  },
+  "streaks": {
+    "current": 0,
+    "longest": 0
+  },
+  "achievements": [
+    {
+      "achievement": {
+        "$oid": "67f186860fe8cfe6859dc435"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8cf"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "67f189dd003687a3ef30b35d"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d0"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "6797185f1e9ce1779232c943"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d1"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "67f18a09003687a3ef30b3fe"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d2"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "67f18a32e6498820c28026d0"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d3"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "679714d7fb7517403711fd85"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d4"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "679c07e7b41d8ce3be3b60bf"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d5"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "679c07830927e747623512ee"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d6"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "67f1819f0fe8cfe6859dc3df"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d7"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "67f184860fe8cfe6859dc421"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d8"
+      }
+    },
+    {
+      "achievement": {
+        "$oid": "69ceef420a2f751ffe6f1ff9"
+      },
+      "earnedAt": null,
+      "progress": 0,
+      "_id": {
+        "$oid": "6a446e7b531238f0107dd8d9"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-29T23:35:29.705Z"
+  },
+  "updatedAt": {
+    "$date": "2026-07-01T01:33:47.345Z"
+  },
+  "__v": 31
+}]

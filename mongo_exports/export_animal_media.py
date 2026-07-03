@@ -31,6 +31,7 @@ def export_animal_media_csv(output_file):
         # Project only the requested fields
         projection = {
             "_id": 0,
+            "mediaID": 1,
             "timestamp": 1,
             "speciesConsensus": 1,
             "consensusStatus": 1,
@@ -46,6 +47,7 @@ def export_animal_media_csv(output_file):
         cursor = collection.find(query, projection)
 
         headers = [
+            "mediaID",
             "timestamp",
             "observationCount",
             "speciesIdentification",
@@ -80,6 +82,7 @@ def export_animal_media_csv(output_file):
                         species_id = sci_name or species.get("observationType", "")
 
                         row = {
+                            "mediaID": doc.get("mediaID"),
                             "timestamp": doc.get("timestamp"),
                             "observationCount": species.get("observationCount", ""),
                             "speciesIdentification": species_id,
